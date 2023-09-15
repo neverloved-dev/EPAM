@@ -1,0 +1,11 @@
+C:\Users\x0nr\Desktop\EPAM\Homework1\WindowsFormsApp1\InputFormatter\bin\Debug\net7.0\InputFormatter.deps.json
+C:\Users\x0nr\Desktop\EPAM\Homework1\WindowsFormsApp1\InputFormatter\bin\Debug\net7.0\InputFormatter.dll
+C:\Users\x0nr\Desktop\EPAM\Homework1\WindowsFormsApp1\InputFormatter\bin\Debug\net7.0\InputFormatter.pdb
+C:\Users\x0nr\Desktop\EPAM\Homework1\WindowsFormsApp1\InputFormatter\obj\Debug\net7.0\InputFormatter.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\x0nr\Desktop\EPAM\Homework1\WindowsFormsApp1\InputFormatter\obj\Debug\net7.0\InputFormatter.AssemblyInfoInputs.cache
+C:\Users\x0nr\Desktop\EPAM\Homework1\WindowsFormsApp1\InputFormatter\obj\Debug\net7.0\InputFormatter.AssemblyInfo.cs
+C:\Users\x0nr\Desktop\EPAM\Homework1\WindowsFormsApp1\InputFormatter\obj\Debug\net7.0\InputFormatter.csproj.CoreCompileInputs.cache
+C:\Users\x0nr\Desktop\EPAM\Homework1\WindowsFormsApp1\InputFormatter\obj\Debug\net7.0\InputFormatter.dll
+C:\Users\x0nr\Desktop\EPAM\Homework1\WindowsFormsApp1\InputFormatter\obj\Debug\net7.0\refint\InputFormatter.dll
+C:\Users\x0nr\Desktop\EPAM\Homework1\WindowsFormsApp1\InputFormatter\obj\Debug\net7.0\InputFormatter.pdb
+C:\Users\x0nr\Desktop\EPAM\Homework1\WindowsFormsApp1\InputFormatter\obj\Debug\net7.0\ref\InputFormatter.dll
