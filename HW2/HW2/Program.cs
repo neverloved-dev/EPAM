@@ -138,7 +138,7 @@ public class FileSystemVisitor
         foreach (var item in fileSystemVisitor.Traverse())
         {
             Console.WriteLine(item);
-        }
+        } 
     }
 
 }

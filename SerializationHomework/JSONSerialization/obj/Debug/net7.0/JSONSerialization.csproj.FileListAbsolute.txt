@@ -1,0 +1,14 @@
+C:\Users\x0nr\Desktop\EPAM\SerializationHomework\JSONSerialization\obj\Debug\net7.0\JSONSerialization.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\x0nr\Desktop\EPAM\SerializationHomework\JSONSerialization\obj\Debug\net7.0\JSONSerialization.AssemblyInfoInputs.cache
+C:\Users\x0nr\Desktop\EPAM\SerializationHomework\JSONSerialization\obj\Debug\net7.0\JSONSerialization.AssemblyInfo.cs
+C:\Users\x0nr\Desktop\EPAM\SerializationHomework\JSONSerialization\obj\Debug\net7.0\JSONSerialization.csproj.CoreCompileInputs.cache
+C:\Users\x0nr\Desktop\EPAM\SerializationHomework\JSONSerialization\bin\Debug\net7.0\JSONSerialization.exe
+C:\Users\x0nr\Desktop\EPAM\SerializationHomework\JSONSerialization\bin\Debug\net7.0\JSONSerialization.deps.json
+C:\Users\x0nr\Desktop\EPAM\SerializationHomework\JSONSerialization\bin\Debug\net7.0\JSONSerialization.runtimeconfig.json
+C:\Users\x0nr\Desktop\EPAM\SerializationHomework\JSONSerialization\bin\Debug\net7.0\JSONSerialization.dll
+C:\Users\x0nr\Desktop\EPAM\SerializationHomework\JSONSerialization\bin\Debug\net7.0\JSONSerialization.pdb
+C:\Users\x0nr\Desktop\EPAM\SerializationHomework\JSONSerialization\obj\Debug\net7.0\JSONSerialization.dll
+C:\Users\x0nr\Desktop\EPAM\SerializationHomework\JSONSerialization\obj\Debug\net7.0\refint\JSONSerialization.dll
+C:\Users\x0nr\Desktop\EPAM\SerializationHomework\JSONSerialization\obj\Debug\net7.0\JSONSerialization.pdb
+C:\Users\x0nr\Desktop\EPAM\SerializationHomework\JSONSerialization\obj\Debug\net7.0\JSONSerialization.genruntimeconfig.cache
+C:\Users\x0nr\Desktop\EPAM\SerializationHomework\JSONSerialization\obj\Debug\net7.0\ref\JSONSerialization.dll
