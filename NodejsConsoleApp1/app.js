@@ -6,11 +6,10 @@ console.log(banannas);
 
 //Task 2
 
-var cars = ["Volvo", "BMW", "Saab"];
-console.log(cars[1]);
+var cars = ["Saab","Volvo","BMW"];
+var carBMW = cars[2];
 cars[0] = "Zastava";
-var lastCar = cars.pop(cars.slice(-1));
-console.log(lastCar);
+var lastCar = cars.slice(-1);
+cars.pop(lastCar);
 cars.push("Audi");
-var splicedCars = cars.splice(0, 9);
-console.log(splicedCars);
+console.log(cars);
