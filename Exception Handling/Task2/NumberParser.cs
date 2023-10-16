@@ -6,31 +6,74 @@ namespace Task2
     {
         public int Parse(string stringValue)
         {
-            int num = 0;
-            int iterationLen = stringValue.Length;
-            try
+            if (stringValue == null)
             {
-                for (int i = 0; i < iterationLen; i++)
+                throw new ArgumentNullException("Input string is null.");
+            }
+
+            int num = 0;
+            int startIndex = 0;
+            int length = stringValue.Length;
+            
+            while (startIndex < length && char.IsWhiteSpace(stringValue[startIndex]))
+            {
+                startIndex++;
+            }
+
+            if (startIndex == length)
+            {
+                throw new FormatException("Input string does not represent a valid integer.");
+            }
+
+            char firstChar = stringValue[startIndex];
+
+            if (firstChar == '+' || firstChar == '-')
+            {
+                startIndex++;
+            }
+
+            if (startIndex == length)
+            {
+                throw new FormatException("Input string does not represent a valid integer.");
+            }
+
+            bool isNegative = (firstChar == '-');
+
+            for (int i = startIndex; i < length; i++)
+            {
+                char c = stringValue[i];
+                
+                if (c == ' ' &&  i == length - 1)
                 {
-                    num = num * 10 + (stringValue[i] - 48);
+                    continue;
                 }
 
+                if (c >= '0' && c <= '9')
+                {
+                    int digit = c - '0';
+                    try
+                    {
+                        checked
+                        {
+                            num = num * 10 + digit;
+                        }
+                    }
+                    catch (OverflowException)
+                    {
+                        throw new OverflowException($"Input value {stringValue} is out of Int32 range.");
+                    }
+                }
+                else
+                {
+                    throw new FormatException($"Input string contains non-numeric character '{c}'.");
+                }
             }
-            catch(ArgumentNullException exception)
+
+            if (isNegative)
             {
-                Console.WriteLine(exception.Message);
-                num = 0;
+                num = -num;
             }
-            catch(OverflowException exception)
-            {
-                Console.WriteLine($"The {exception.Data} is too big to handle");
-                num = 0;
-            }
-            catch(FormatException exception)
-            {
-                Console.WriteLine($"{exception.Message} for {exception.Data}");
-                num = 0;
-            }
+
             return num;
         }
     }
