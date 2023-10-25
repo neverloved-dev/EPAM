@@ -1,7 +1,31 @@
 IF OBJECT_ID('EmployeeInfo', 'V') IS NOT NULL
     DROP VIEW EmployeeInfo;
-DROP TABLE IF EXISTS Person
+	GO
+DROP PROCEDURE IF EXISTS InsertEmployeeInfo
+GO
+IF OBJECT_ID('Employee_AddressId','F') IS NOT NULL
+BEGIN
+	ALTER TABLE Employee DROP CONSTRAINT Employee_AddressId
+	END
+	GO
+IF OBJECT_ID('Employee_PersonId','F') IS NOT NULL
+BEGIN
+	ALTER TABLE Employee DROP CONSTRAINT Employee_PersonId
+END
+GO
+IF OBJECT_ID('Company_AddressId','F')IS NOT NULL
+BEGIN
+	ALTER TABLE Company DROP CONSTRAINT Company_AddressId
+END
+GO
+IF OBJECT_ID('CreateCompanyOnEmployeeInsert','TR') IS NOT NULL
+	DROP TRIGGER CreateCompanyOnEmployeeInsert;
+GO
 
+DROP TABLE IF EXISTS Person
+DROP TABLE IF EXISTS Address
+DROP TABLE IF EXISTS Employee
+DROP TABLE IF EXISTS Company
 --- TASK1 ---
 CREATE TABLE Person(
 	Id int not null CONSTRAINT PersonID primary key(Id),
@@ -9,7 +33,7 @@ CREATE TABLE Person(
 	LastName varchar(50) not null
 )
 
-DROP TABLE IF EXISTS Address
+
 
 CREATE TABLE Address(
 	Id int not null CONSTRAINT AddressId primary key(Id),
@@ -19,17 +43,18 @@ CREATE TABLE Address(
 	ZipCode nvarchar(50) not null
 )
 
-DROP TABLE IF EXISTS Employee
+
 
 CREATE TABLE Employee(
 	Id int not null CONSTRAINT EmployeeId primary key(Id),
 	AddressId int not null CONSTRAINT Employee_AddressId foreign key(AddressId) references Address(Id),
 	PersonId int not null CONSTRAINT Employee_PersonId foreign key (PersonId) references Person(Id),
 	CompanyName nvarchar(30),
+	Position  nvarchar(30) NULL,
 	EmployeeName nvarchar(100)
 )
 
-DROP TABLE IF EXISTS Company
+
 
 CREATE TABLE Company(
 	Id int not null CONSTRAINT CompanyId primary key(Id),
@@ -48,7 +73,7 @@ AS(
 FROM Employee E
 LEFT JOIN Person P ON E.PersonId = P.Id
 LEFT JOIN Address A ON E.AddressId = A.Id
-ORDER BY E.CompanyName ASC, A.City ASC);
+);
 GO
 
 
@@ -82,8 +107,23 @@ BEGIN
 
         DECLARE @AddressId INT = SCOPE_IDENTITY();
 
-        INSERT INTO Employee (AddressId, PersonId, CompanyName, Position, EmployeeName)
-        VALUES (@AddressId, @PersonId, @CompanyName, @Position, @EmployeeName);
+        INSERT INTO Employee (AddressId, PersonId,  CompanyName, Position, EmployeeName)
+        VALUES (@AddressId, @PersonId, @CompanyName,@Position, @EmployeeName);
     END
 END;
+GO
 
+-- TASK 4 --
+CREATE TRIGGER CreateCompanyOnEmployeeInsert ON Employee AFTER INSERT
+AS
+	BEGIN
+		DECLARE @CompanyId INT, @AddressId INT;
+		SELECT @CompanyId = i.Id, @AddressId = i.AddressId
+    FROM INSERTED i;
+
+    -- Copy employee's address to create a new company
+    INSERT INTO Company (Name, AddressId)
+    SELECT e.CompanyName, @AddressId
+    FROM Employee e
+    WHERE e.Id = @CompanyId;
+END;
