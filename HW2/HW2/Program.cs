@@ -1,4 +1,5 @@
-﻿using System;
+﻿namespace HW2;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -143,20 +144,6 @@ public class FileSystemVisitor
 
 }
 
-public class FileSystemEventArgs : EventArgs
-{
-    public string Path { get; }
 
-    public bool Exclude { get; set; }
-    public bool Abort { get; set; }
-
-    public FileSystemEventArgs(string path)
-    {
-        Path = path;
-        Exclude = false;
-        Abort = false;
-    }
-
-}
 
 
