@@ -11,7 +11,6 @@ using log4net.Config;
 using log4net.Core;
 using Moq;
 using Xunit;
-using ILogger = Serilog.ILogger;
 
 namespace BrainstormSessions.Test.UnitTests
 {
