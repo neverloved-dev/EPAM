@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using Serilog.Core;
 
 namespace BrainstormSessions
 {
@@ -36,6 +38,10 @@ namespace BrainstormSessions
                 InitializeDatabaseAsync(repository).Wait();
             }
 
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.File("file.txt",rollingInterval:RollingInterval.Hour)
+                .CreateLogger();
             app.UseStaticFiles();
 
             app.UseRouting();

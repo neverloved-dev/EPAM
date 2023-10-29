@@ -6,22 +6,33 @@ using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
 using BrainstormSessions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using ILogger = Serilog.ILogger;
 
 namespace BrainstormSessions.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
+        private readonly ILogger _logger;
 
         public HomeController(IBrainstormSessionRepository sessionRepository)
         {
             _sessionRepository = sessionRepository;
+            _logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.File("Logs.txt", rollingInterval: RollingInterval.Day)
+               // .WriteTo.Console()
+                .CreateLogger();
         }
 
         public async Task<IActionResult> Index()
         {
+            _logger.Information("Getting inside Home controller Index method!");
             var sessionList = await _sessionRepository.ListAsync();
-
+            _logger.Information("Getting inside Home controller Index method!");
+            
             var model = sessionList.Select(session => new StormSessionViewModel()
             {
                 Id = session.Id,
@@ -29,10 +40,10 @@ namespace BrainstormSessions.Controllers
                 Name = session.Name,
                 IdeaCount = session.Ideas.Count
             });
-
+            _logger.Information("Getting inside Home controller Index method!");
             return View(model);
         }
-
+        
         public class NewSessionModel
         {
             [Required]
@@ -44,6 +55,7 @@ namespace BrainstormSessions.Controllers
         {
             if (!ModelState.IsValid)
             {
+                _logger.Warning("Model state is not valid!");
                 return BadRequest(ModelState);
             }
             else

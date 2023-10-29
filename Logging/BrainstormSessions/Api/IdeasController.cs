@@ -6,16 +6,22 @@ using BrainstormSessions.ClientModels;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace BrainstormSessions.Api
 {
     public class IdeasController : ControllerBase
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
+        private readonly ILogger _logger;
 
         public IdeasController(IBrainstormSessionRepository sessionRepository)
         {
             _sessionRepository = sessionRepository;
+            _logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.File("Logs.txt", rollingInterval:RollingInterval.Day)
+                .CreateLogger();
         }
 
         #region snippet_ForSessionAndCreate
@@ -44,6 +50,7 @@ namespace BrainstormSessions.Api
         {
             if (!ModelState.IsValid)
             {
+                _logger.Error("Model state is invalid inside Ideas Controller");
                 return BadRequest(ModelState);
             }
 
