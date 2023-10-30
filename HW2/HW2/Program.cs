@@ -89,17 +89,31 @@ public class FileSystemVisitor
 
     protected virtual void OnFilteredFileFound(string path)
     {
-        FilteredFileFound?.Invoke(this, new FileSystemEventArgs(path));
+        if (FilteredFileFound == null) return; // Return when no filter is provided
+
+        if (filter(path))
+        {
+            FilteredFileFound(this, new FileSystemEventArgs(path));
+        }
     }
 
     protected virtual void OnFilteredDirectoryFound(string path)
     {
-        FilteredDirectoryFound?.Invoke(this, new FileSystemEventArgs(path));
+        if (FilteredDirectoryFound == null) return; // Return when no filter is provided
+
+        if (filter(path))
+        {
+            FilteredDirectoryFound(this, new FileSystemEventArgs(path));
+        }
     }
 
     static void Main(string[] args)
     {
-        string rootPath = @"C:\users\x0nr\Desktop";
+        if (args == null)
+        {
+            throw new Exception("No arguments have been provided to the console!");
+        }
+        string rootPath = args[0];
 
         // Define a filter using a lambda expression
         Func<string, bool> filter = path =>
@@ -133,7 +147,6 @@ public class FileSystemVisitor
             {
                 Console.WriteLine($"FilteredDirectoryFound: {e.Path}");
             }
-
         };
 
         foreach (var item in fileSystemVisitor.Traverse())
@@ -141,9 +154,4 @@ public class FileSystemVisitor
             Console.WriteLine(item);
         } 
     }
-
 }
-
-
-
-
