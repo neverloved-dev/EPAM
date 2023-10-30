@@ -1,35 +1,9 @@
 ﻿using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using ClassLibrary1;
 
 namespace XMLSerialization
 {
-    public class Employee 
-    {
-        public string EmployeeName { get; set; }
-        public Employee() { }
-
-    }
-    [Serializable]
-   public class Department : ISerializable 
-    {
-        public string DepartmentName { get; set; }
-        public List<Employee> Employees { get; set; }
-        public Department() 
-        {
-            Employees = new List<Employee>();
-        }
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("DepartmentName", DepartmentName);
-            info.AddValue("EmployeeList", Employees);
-        }
-        public Department(SerializationInfo info, StreamingContext context)
-        {
-            DepartmentName = (string)info.GetValue("DepartmentName", typeof(string));
-            Employees = (List<Employee>)info.GetValue("Employees", typeof(List<Employee>));
-        }
-    }
-
     public class Program
     {
         public static void Main()

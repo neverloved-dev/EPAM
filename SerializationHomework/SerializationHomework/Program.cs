@@ -1,22 +1,10 @@
 ﻿using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using ClassLibrary1;
 
 namespace BinarySerialization
 {
-    class Employee
-    {
-        public String EmployeeName { get; set;}
-    }
-
-    class Department
-    {
-        public String DepartmentName { get; set;}
-        public List<Employee> Employees { get; set;}
-        public Department()
-        {
-            Employees = new List<Employee>();
-        }
-    }
+    
 
     public class Program
     {
@@ -37,18 +25,35 @@ namespace BinarySerialization
             department.Employees.Add(employee3);
 
             IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream("Department.bin",FileMode.Create, FileAccess.Write);
-            formatter.Serialize(stream, department);
-            stream.Close();
+            try
+            {
+                Stream stream = new FileStream("Department.bin", FileMode.Create, FileAccess.Write);
+                formatter.Serialize(stream, department);
+                stream.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception happened: " + e);
+                throw;
+            }
 
             //Deserialization
-            Stream readStream = new FileStream("Department.bin",FileMode.Open, FileAccess.Read,FileShare.Read);
-            Department department2 = (Department)formatter.Deserialize(readStream);
-            readStream.Close();
-            Console.WriteLine(department2.DepartmentName);
-            foreach(var employees in department2.Employees)
+            try
             {
-                Console.WriteLine(employees.EmployeeName);
+                
+                Stream readStream = new FileStream("Department.bin",FileMode.Open, FileAccess.Read,FileShare.Read);
+                Department department2 = (Department)formatter.Deserialize(readStream);
+                readStream.Close();
+                Console.WriteLine(department2.DepartmentName);
+                foreach(var employees in department2.Employees)
+                {
+                    Console.WriteLine(employees.EmployeeName);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
 

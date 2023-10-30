@@ -1,31 +1,11 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text.Json;
+using ClassLibrary1;
 
 namespace CloningNamespace
 {
-    public class Employee
-    {
-        public string EmployeeName { get; set; }
-        public Employee() { }
-
-    }
-    [Serializable]
-    public class Department
-    {
-        public string DepartmentName { get; set; }
-        public List<Employee> Employees { get; set; }
-        public Department()
-        {
-            Employees = new List<Employee>();
-        }
-
-        public static Department DeepCopy(Department department)
-        {
-            var jsonString = JsonSerializer.Serialize(department);
-            return JsonSerializer.Deserialize<Department>(jsonString);
-        }
-
-    }
 
     class Program
     {
@@ -48,12 +28,10 @@ namespace CloningNamespace
             cloned.Employees[0].EmployeeName = "Another employee";
 
             Console.WriteLine($"The original {department.DepartmentName} \t cloned {cloned.DepartmentName}");
-            for(int i = 0; i < department.Employees.Count; i++)
+            for (int i = 0; i < department.Employees.Count; i++)
             {
-                Console.WriteLine($"{department.Employees[i].EmployeeName} \t {cloned.Employees[i].EmployeeName}" );
+                Console.WriteLine($"{department.Employees[i].EmployeeName} \t {cloned.Employees[i].EmployeeName}");
             }
-
         }
     }
-
 }

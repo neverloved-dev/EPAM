@@ -1,23 +1,8 @@
 ﻿using System.Text.Json;
+using ClassLibrary1;
 
 namespace JSONSerialization
 {
-    class Employee
-    {
-        public string EmployeeName { get; set; }
-        public Employee() { }
-    }
-
-    class Department
-    {
-        public string DepartmentName { get; set; }
-        public List<Employee> Employees { get; set; }
-        public Department() 
-        {
-            Employees = new List<Employee>();
-        }
-    }
-
     public class Program
     {
         public static void Main()
