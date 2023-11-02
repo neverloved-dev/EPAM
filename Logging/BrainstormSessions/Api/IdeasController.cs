@@ -15,13 +15,14 @@ namespace BrainstormSessions.Api
         private readonly IBrainstormSessionRepository _sessionRepository;
         private readonly ILogger _logger;
 
-        public IdeasController(IBrainstormSessionRepository sessionRepository)
+        public IdeasController(IBrainstormSessionRepository sessionRepository,ILogger logger)
         {
+            _logger = logger;
             _sessionRepository = sessionRepository;
-            _logger = new LoggerConfiguration()
+           /* _logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .WriteTo.File("Logs.txt", rollingInterval:RollingInterval.Day)
-                .CreateLogger();
+                .CreateLogger();*/
         }
 
         #region snippet_ForSessionAndCreate
@@ -31,6 +32,7 @@ namespace BrainstormSessions.Api
             var session = await _sessionRepository.GetByIdAsync(sessionId);
             if (session == null)
             {
+                _logger.Error("Session null in Ideas Controller");
                 return NotFound(sessionId);
             }
 
@@ -84,6 +86,7 @@ namespace BrainstormSessions.Api
 
             if (session == null)
             {
+                _logger.Debug("Session is null");
                 return NotFound(sessionId);
             }
 

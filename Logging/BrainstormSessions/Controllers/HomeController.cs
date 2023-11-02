@@ -17,14 +17,15 @@ namespace BrainstormSessions.Controllers
         private readonly IBrainstormSessionRepository _sessionRepository;
         private readonly ILogger _logger;
 
-        public HomeController(IBrainstormSessionRepository sessionRepository)
+        public HomeController(IBrainstormSessionRepository sessionRepository,ILogger logger)
         {
+            _logger = logger;
             _sessionRepository = sessionRepository;
-            _logger = new LoggerConfiguration()
+            /*_logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .WriteTo.File("Logs.txt", rollingInterval: RollingInterval.Day)
                // .WriteTo.Console()
-                .CreateLogger();
+                .CreateLogger();*/
         }
 
         public async Task<IActionResult> Index()
