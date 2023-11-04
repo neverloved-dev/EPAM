@@ -10,16 +10,23 @@ using log4net.Appender;
 using log4net.Config;
 using log4net.Core;
 using Moq;
+using Serilog;
 using Xunit;
+using ILogger = Serilog.ILogger;
 
 namespace BrainstormSessions.Test.UnitTests
 {
     public class LoggingTests : IDisposable
     {
         private readonly MemoryAppender _appender;
-
+        private readonly ILogger _logger;
         public LoggingTests()
         {
+            _logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.File("file.txt",rollingInterval:RollingInterval.Hour)
+                .CreateLogger();
+            
             _appender = new MemoryAppender();
             BasicConfigurator.Configure(_appender);
         }
@@ -36,7 +43,7 @@ namespace BrainstormSessions.Test.UnitTests
             var mockRepo = new Mock<IBrainstormSessionRepository>();
             mockRepo.Setup(repo => repo.ListAsync())
                 .ReturnsAsync(GetTestSessions());
-            var controller = new HomeController(mockRepo.Object);
+            var controller = new HomeController(mockRepo.Object,_logger);
 
             // Act
             var result = await controller.Index();
@@ -53,7 +60,7 @@ namespace BrainstormSessions.Test.UnitTests
             var mockRepo = new Mock<IBrainstormSessionRepository>();
             mockRepo.Setup(repo => repo.ListAsync())
                 .ReturnsAsync(GetTestSessions());
-            var controller = new HomeController(mockRepo.Object);
+            var controller = new HomeController(mockRepo.Object,_logger);
             controller.ModelState.AddModelError("SessionName", "Required");
             var newSession = new HomeController.NewSessionModel();
 
@@ -70,7 +77,7 @@ namespace BrainstormSessions.Test.UnitTests
         {
             // Arrange & Act
             var mockRepo = new Mock<IBrainstormSessionRepository>();
-            var controller = new IdeasController(mockRepo.Object);
+            var controller = new IdeasController(mockRepo.Object,_logger);
             controller.ModelState.AddModelError("error", "some error");
 
             // Act

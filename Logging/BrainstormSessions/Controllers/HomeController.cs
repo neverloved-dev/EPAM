@@ -26,11 +26,16 @@ namespace BrainstormSessions.Controllers
                 .WriteTo.File("Logs.txt", rollingInterval: RollingInterval.Day)
                // .WriteTo.Console()
                 .CreateLogger();*/
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.File("file.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
         }
 
         public async Task<IActionResult> Index()
         {
             _logger.Information("Getting inside Home controller Index method!");
+            Log.Information("Getting inside Home controller Index Method");
             var sessionList = await _sessionRepository.ListAsync();
             _logger.Information("Getting inside Home controller Index method!");
             
@@ -56,6 +61,7 @@ namespace BrainstormSessions.Controllers
         {
             if (!ModelState.IsValid)
             {
+                Log.Warning("Model state is not valid!");
                 _logger.Warning("Model state is not valid!");
                 return BadRequest(ModelState);
             }

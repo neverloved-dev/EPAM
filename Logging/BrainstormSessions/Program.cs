@@ -1,6 +1,9 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.EmailPickup;
 
 namespace BrainstormSessions
 {
@@ -10,7 +13,14 @@ namespace BrainstormSessions
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
-                .WriteTo.File("Logs.txt", rollingInterval:RollingInterval.Day)
+                .WriteTo.File("file.txt", rollingInterval:RollingInterval.Day)
+                .WriteTo.EmailPickup(
+                    fromEmail: "app@example.com",
+                    toEmail: "andjic.djordje99@gmail.com",
+                    pickupDirectory: @"./",
+                    subject: "UH OH",
+                    fileExtension: ".email",
+                    restrictedToMinimumLevel: LogEventLevel.Information)
                 .CreateLogger();
             CreateHostBuilder(args).Build().Run();
         }
