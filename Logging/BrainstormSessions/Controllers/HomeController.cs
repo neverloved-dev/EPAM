@@ -5,40 +5,27 @@ using System.Threading.Tasks;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
 using BrainstormSessions.ViewModels;
+using log4net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using ILogger = Serilog.ILogger;
 
 namespace BrainstormSessions.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
-        private readonly ILogger _logger;
-
-        public HomeController(IBrainstormSessionRepository sessionRepository,ILogger logger)
+        private ILog Logger = LogManager.GetLogger(typeof(HomeController));
+        public HomeController(IBrainstormSessionRepository sessionRepository)
         {
-            _logger = logger;
             _sessionRepository = sessionRepository;
-            /*_logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .WriteTo.File("Logs.txt", rollingInterval: RollingInterval.Day)
-               // .WriteTo.Console()
-                .CreateLogger();*/
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .WriteTo.File("file.txt", rollingInterval: RollingInterval.Day)
-                .CreateLogger();
         }
 
         public async Task<IActionResult> Index()
         {
-            _logger.Information("Getting inside Home controller Index method!");
-            Log.Information("Getting inside Home controller Index Method");
+           Logger.Info("Getting inside Home Controller Index Method");
             var sessionList = await _sessionRepository.ListAsync();
-            _logger.Information("Getting inside Home controller Index method!");
-            
+          
             var model = sessionList.Select(session => new StormSessionViewModel()
             {
                 Id = session.Id,
@@ -46,8 +33,7 @@ namespace BrainstormSessions.Controllers
                 Name = session.Name,
                 IdeaCount = session.Ideas.Count
             });
-            _logger.Information("Getting inside Home controller Index method!");
-            return View(model);
+          return View(model);
         }
         
         public class NewSessionModel
@@ -62,7 +48,7 @@ namespace BrainstormSessions.Controllers
             if (!ModelState.IsValid)
             {
                 Log.Warning("Model state is not valid!");
-                _logger.Warning("Model state is not valid!");
+               Logger.Warn("Model State is not valid!");
                 return BadRequest(ModelState);
             }
             else

@@ -5,24 +5,17 @@ using System.Threading.Tasks;
 using BrainstormSessions.ClientModels;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
+using log4net;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 
 namespace BrainstormSessions.Api
 {
     public class IdeasController : ControllerBase
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
-        private readonly ILogger _logger;
-
-        public IdeasController(IBrainstormSessionRepository sessionRepository,ILogger logger)
+        private ILog Logger = LogManager.GetLogger(typeof(IdeasController));
+        public IdeasController(IBrainstormSessionRepository sessionRepository)
         {
-            _logger = logger;
-            _sessionRepository = sessionRepository;
-           /* _logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .WriteTo.File("Logs.txt", rollingInterval:RollingInterval.Day)
-                .CreateLogger();*/
         }
 
         #region snippet_ForSessionAndCreate
@@ -32,7 +25,7 @@ namespace BrainstormSessions.Api
             var session = await _sessionRepository.GetByIdAsync(sessionId);
             if (session == null)
             {
-                _logger.Error("Session null in Ideas Controller");
+                Logger.Error("Session null in Ideas Controller");
                 return NotFound(sessionId);
             }
 
@@ -52,7 +45,7 @@ namespace BrainstormSessions.Api
         {
             if (!ModelState.IsValid)
             {
-                _logger.Error("Model state is invalid inside Ideas Controller");
+                Logger.Error("Model state is invalid inside Ideas Controller");
                 return BadRequest(ModelState);
             }
 
@@ -86,7 +79,7 @@ namespace BrainstormSessions.Api
 
             if (session == null)
             {
-                _logger.Debug("Session is null");
+                Logger.Debug("Session is null");
                 return NotFound(sessionId);
             }
 
@@ -111,6 +104,7 @@ namespace BrainstormSessions.Api
         {
             if (!ModelState.IsValid)
             {
+                Logger.Error("Model state is invalid!");
                 return BadRequest(ModelState);
             }
 

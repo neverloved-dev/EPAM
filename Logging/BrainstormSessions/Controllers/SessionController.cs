@@ -1,16 +1,16 @@
 ﻿using System.Threading.Tasks;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.ViewModels;
+using log4net;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
-using Serilog.Core;
 
 namespace BrainstormSessions.Controllers
 {
     public class SessionController : Controller
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
-
+        private ILog Logger = LogManager.GetLogger(typeof(SessionController));
         public SessionController(IBrainstormSessionRepository sessionRepository)
         {
             _sessionRepository = sessionRepository;
@@ -18,13 +18,13 @@ namespace BrainstormSessions.Controllers
 
         public async Task<IActionResult> Index(int? id)
         {
-            Log.Debug("Inside index Session Controller");
+            Logger.Debug("Inside index Session Controller");
             if (!id.HasValue)
             {
                 return RedirectToAction(actionName: nameof(Index),
                     controllerName: "Home");
             }
-            Log.Debug("Getting the ID=${id.Value}");
+            Logger.Debug("Getting the ID=${id.Value}");
             var session = await _sessionRepository.GetByIdAsync(id.Value);
             if (session == null)
             {

@@ -18,15 +18,9 @@ namespace BrainstormSessions.Test.UnitTests
 {
     public class LoggingTests : IDisposable
     {
-        private readonly MemoryAppender _appender;
-        private readonly ILogger _logger;
+        private readonly MemoryAppender _appender; 
         public LoggingTests()
         {
-            _logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .WriteTo.File("file.txt",rollingInterval:RollingInterval.Hour)
-                .CreateLogger();
-            
             _appender = new MemoryAppender();
             BasicConfigurator.Configure(_appender);
         }
@@ -43,7 +37,7 @@ namespace BrainstormSessions.Test.UnitTests
             var mockRepo = new Mock<IBrainstormSessionRepository>();
             mockRepo.Setup(repo => repo.ListAsync())
                 .ReturnsAsync(GetTestSessions());
-            var controller = new HomeController(mockRepo.Object,_logger);
+            var controller = new HomeController(mockRepo.Object);
 
             // Act
             var result = await controller.Index();
@@ -60,7 +54,7 @@ namespace BrainstormSessions.Test.UnitTests
             var mockRepo = new Mock<IBrainstormSessionRepository>();
             mockRepo.Setup(repo => repo.ListAsync())
                 .ReturnsAsync(GetTestSessions());
-            var controller = new HomeController(mockRepo.Object,_logger);
+            var controller = new HomeController(mockRepo.Object);
             controller.ModelState.AddModelError("SessionName", "Required");
             var newSession = new HomeController.NewSessionModel();
 
@@ -77,7 +71,7 @@ namespace BrainstormSessions.Test.UnitTests
         {
             // Arrange & Act
             var mockRepo = new Mock<IBrainstormSessionRepository>();
-            var controller = new IdeasController(mockRepo.Object,_logger);
+            var controller = new IdeasController(mockRepo.Object);
             controller.ModelState.AddModelError("error", "some error");
 
             // Act
