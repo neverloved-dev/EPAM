@@ -15,15 +15,16 @@ namespace BrainstormSessions.Controllers
     public class HomeController : Controller
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
-        private ILog Logger = LogManager.GetLogger(typeof(HomeController));
-        public HomeController(IBrainstormSessionRepository sessionRepository)
+        private ILog _logger;
+        public HomeController(IBrainstormSessionRepository sessionRepository, ILog logger)
         {
             _sessionRepository = sessionRepository;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
         {
-           Logger.Info("Getting inside Home Controller Index Method");
+           _logger.Info("Getting inside Home Controller Index Method");
             var sessionList = await _sessionRepository.ListAsync();
           
             var model = sessionList.Select(session => new StormSessionViewModel()
@@ -48,7 +49,7 @@ namespace BrainstormSessions.Controllers
             if (!ModelState.IsValid)
             {
                 Log.Warning("Model state is not valid!");
-               Logger.Warn("Model State is not valid!");
+               _logger.Warn("Model State is not valid!");
                 return BadRequest(ModelState);
             }
             else

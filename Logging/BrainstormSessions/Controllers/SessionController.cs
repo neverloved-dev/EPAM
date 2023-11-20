@@ -10,21 +10,22 @@ namespace BrainstormSessions.Controllers
     public class SessionController : Controller
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
-        private ILog Logger = LogManager.GetLogger(typeof(SessionController));
-        public SessionController(IBrainstormSessionRepository sessionRepository)
+        private ILog _logger;
+        public SessionController(IBrainstormSessionRepository sessionRepository, ILog logger)
         {
             _sessionRepository = sessionRepository;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index(int? id)
         {
-            Logger.Debug("Inside index Session Controller");
+            _logger.Debug("Inside index Session Controller");
             if (!id.HasValue)
             {
                 return RedirectToAction(actionName: nameof(Index),
                     controllerName: "Home");
             }
-            Logger.Debug("Getting the ID=${id.Value}");
+            _logger.Debug("Getting the ID=${id.Value}");
             var session = await _sessionRepository.GetByIdAsync(id.Value);
             if (session == null)
             {
