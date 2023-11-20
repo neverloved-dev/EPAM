@@ -5,24 +5,18 @@ using System.Threading.Tasks;
 using BrainstormSessions.ClientModels;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
+using log4net;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 
 namespace BrainstormSessions.Api
 {
     public class IdeasController : ControllerBase
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
-        private readonly ILogger _logger;
-
-        public IdeasController(IBrainstormSessionRepository sessionRepository,ILogger logger)
+        private ILog _logger;
+        public IdeasController(IBrainstormSessionRepository sessionRepository, ILog logger)
         {
             _logger = logger;
-            _sessionRepository = sessionRepository;
-           /* _logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .WriteTo.File("Logs.txt", rollingInterval:RollingInterval.Day)
-                .CreateLogger();*/
         }
 
         #region snippet_ForSessionAndCreate
@@ -111,6 +105,7 @@ namespace BrainstormSessions.Api
         {
             if (!ModelState.IsValid)
             {
+                _logger.Error("Model state is invalid!");
                 return BadRequest(ModelState);
             }
 

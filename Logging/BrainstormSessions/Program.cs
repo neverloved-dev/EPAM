@@ -1,10 +1,11 @@
 using System;
+using System.Collections.Immutable;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.EmailPickup;
-
+using log4net;
 namespace BrainstormSessions
 {
     public class Program
@@ -31,6 +32,10 @@ namespace BrainstormSessions
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                }).ConfigureLogging(builder=>{
+            log4net.Config.BasicConfigurator.Configure();
+            log4net.ILog log = log4net.LogManager.GetLogger(typeof(Program));
                 });
+            
     }
 }
