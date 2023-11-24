@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassLibrary1
+namespace FileConfigurationProvider
 {// Configuration providers
-    public static class FileConfigurationProvider
+    public  class FileConfigurationProvider
     {
         public static void SaveSetting(string settingName, string value)
         {

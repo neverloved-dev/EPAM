@@ -9,8 +9,40 @@ namespace ClassLibrary1
 {
     public class ConfigurationComponentBase
     {
-        public void SaveSettings()
+        string fileProviderPath = @"C:\Users\x0nr\Desktop\EPAM\Reflection\FileConfigurationProvider\bin\Debug\netstandard2.1\FileConfigurationProvider.dll";
+        string configManagerProviderPath = @"C:\Users\x0nr\Desktop\EPAM\Reflection\ConfigurationAttributeComponentBase\bin\Debug\netstandard2.1\ConfigurationManagerConfigurationProvider.dll";
+
+        protected dynamic FileConfigurationProvider { get; set; }
+        protected dynamic ConfigurationManagerConfigurationProvider { get; set; }
+
+        protected ConfigurationComponentBase()
         {
+            InitializeProviders();
+        }
+
+        private void InitializeProviders()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+
+            Type fileConfigProviderType = assembly.GetType("FileConfigurationProvider.FileConfigurationProvider");
+            if (fileConfigProviderType != null)
+            {
+                FileConfigurationProvider = Activator.CreateInstance(fileConfigProviderType);
+            }
+
+            Type configManagerConfigProviderType = assembly.GetType("ConfigurationManagerConfigurationProvider.ConfigurationManagerConfigurationProvider");
+            if (configManagerConfigProviderType != null)
+            {
+                ConfigurationManagerConfigurationProvider = Activator.CreateInstance(configManagerConfigProviderType);
+            }
+        }
+
+            public void SaveSettings()
+        {
+            object fileProviderObject = PluginLoader.LoadProvider(fileProviderPath, "FileConfigurationProvider.FileConfigurationProvider");
+            dynamic fileProvider = Convert.ChangeType(fileProviderObject, fileProviderObject.GetType());
+            object configManagerProviderObject = PluginLoader.LoadProvider(configManagerProviderPath, "ConfigurationManagerConfigurationProvider.ConfigurationManagerConfigurationProvider");
+            dynamic configManagerProvider = Convert.ChangeType(configManagerProviderObject, configManagerProviderObject.GetType());
             PropertyInfo[] properties = this.GetType().GetProperties();
             foreach (PropertyInfo property in properties)
             {
@@ -22,11 +54,28 @@ namespace ClassLibrary1
                     {
                         if (attribute.ProviderType == "File")
                         {
-                            FileConfigurationProvider.SaveSetting(attribute.SettingName, settingValue);
+                            if (fileProvider != null)
+                            {
+                                fileProvider.SaveSetting(attribute.SettingName, settingValue);
+                            }
+                            else
+                            {
+                                throw new NullReferenceException("File configuration  is null");
+                            }
+                            
                         }
                         else if (attribute.ProviderType == "ConfigurationManager")
                         {
-                            ConfigurationManagerConfigurationProvider.SaveSetting(attribute.SettingName, settingValue);
+                            if (configManagerProvider != null)
+                            { 
+                               configManagerProvider.SaveSetting(attribute.SettingName, settingValue);
+                            
+                            }
+                            else
+                            {
+                                throw new NullReferenceException("Configuration managaer is null");
+                            }
+                            
                         }
                         // Add more providers as needed
                     }
@@ -36,6 +85,10 @@ namespace ClassLibrary1
 
         public void LoadSettings()
         {
+            object fileProviderObject = PluginLoader.LoadProvider(fileProviderPath, "FileConfigurationProvider.FileConfigurationProvider");
+            dynamic fileProvider = Convert.ChangeType(fileProviderObject, fileProviderObject.GetType());
+            object configManagerProviderObject = PluginLoader.LoadProvider(configManagerProviderPath, "ConfigurationManagerConfigurationProvider.ConfigurationManagerConfigurationProvider");
+            dynamic configManagerProvider = Convert.ChangeType(configManagerProviderObject, configManagerProviderObject.GetType());
             PropertyInfo[] properties = this.GetType().GetProperties();
             foreach (PropertyInfo property in properties)
             {
@@ -45,11 +98,28 @@ namespace ClassLibrary1
                     string loadedValue = null;
                     if (attribute.ProviderType == "File")
                     {
-                        loadedValue = FileConfigurationProvider.LoadSetting(attribute.SettingName);
+                        if (fileProvider != null)
+                        {
+                            fileProvider.SaveSetting("SettingName", "Value");
+                            loadedValue = fileProvider.LoadSetting("SettingName");
+                        }
+                        else
+                        {
+                            if (configManagerProvider != null)
+                            {
+                                configManagerProvider.SaveSetting("SettingName", "Value");
+                                loadedValue = configManagerProvider.LoadSetting("SettingName");
+                            }
+                            else
+                            {
+                                loadedValue = fileProvider.LoadSetting(attribute.SettingName);
+                            }
+                        }
+
                     }
                     else if (attribute.ProviderType == "ConfigurationManager")
                     {
-                        loadedValue = ConfigurationManagerConfigurationProvider.LoadSetting(attribute.SettingName);
+                        loadedValue = configManagerProvider.LoadSetting(attribute.SettingName);
                     }
                     // Add more providers as needed
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary1
 {
-    public static class ConfigurationManagerConfigurationProvider
+    public  class ConfigurationManagerConfigurationProvider
     {
         public static void SaveSetting(string settingName, string value)
         {

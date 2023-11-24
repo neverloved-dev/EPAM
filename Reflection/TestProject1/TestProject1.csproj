@@ -24,6 +24,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ClassLibrary1\ClassLibrary1.csproj" />
+    <ProjectReference Include="..\ConfigurationAttributeComponentBase\ConfigurationManagerConfigurationProvider.csproj" />
+    <ProjectReference Include="..\FileConfigurationProvider\FileConfigurationProvider.csproj" />
   </ItemGroup>
 
 </Project>
