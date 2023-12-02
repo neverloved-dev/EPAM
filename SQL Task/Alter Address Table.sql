@@ -1,3 +1,6 @@
 ALTER TABLE Address
-ADD Geolocation SPATIAL
-GO;
+DROP COLUMN IF EXISTS Geolocation
+
+
+ALTER TABLE Address
+ADD Geolocation GEOGRAPHY

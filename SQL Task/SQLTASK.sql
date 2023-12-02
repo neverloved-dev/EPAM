@@ -103,7 +103,7 @@ BEGIN
                 SET @CompanyName = LEFT(@CompanyName, 20);
 
             -- Check if the address already exists
-            SELECT @AddressId = AddressId
+            SELECT @AddressId = Address.Id
             FROM Address
             WHERE Street = @Street
             AND City = @City
