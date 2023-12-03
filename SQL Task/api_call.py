@@ -25,5 +25,11 @@ def get_data(address:str):
     insert_data(latitude, longitude)
     
     
-if __name__ == "main":
-    get_data(sys.argv)
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <address>")
+        sys.exit(1)
+        
+    address = sys.argv[1]
+    get_data(address)
