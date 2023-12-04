@@ -9,8 +9,8 @@ namespace ClassLibrary1
 {
     public class ConfigurationComponentBase
     {
-        string fileProviderPath = @"C:\Users\x0nr\Desktop\EPAM\Reflection\FileConfigurationProvider\bin\Debug\netstandard2.1\FileConfigurationProvider.dll";
-        string configManagerProviderPath = @"C:\Users\x0nr\Desktop\EPAM\Reflection\ConfigurationAttributeComponentBase\bin\Debug\netstandard2.1\ConfigurationManagerConfigurationProvider.dll";
+        string fileProviderPath = "FileConfigurationProvider.dll";
+        string configManagerProviderPath = "ConfigurationManagerConfigurationProvider.dll";
 
         protected dynamic FileConfigurationProvider { get; set; }
         protected dynamic ConfigurationManagerConfigurationProvider { get; set; }
@@ -77,7 +77,7 @@ namespace ClassLibrary1
                             }
                             
                         }
-                        // Add more providers as needed
+
                     }
                 }
             }
@@ -98,6 +98,11 @@ namespace ClassLibrary1
                     string loadedValue = null;
                     if (attribute.ProviderType == "File")
                     {
+                        if (!File.Exists("config.txt"))
+                        {
+                            property.SetValue(this, null);
+                            continue; // Move to the next property
+                        }
                         if (fileProvider != null)
                         {
                             fileProvider.SaveSetting("SettingName", "Value");

@@ -11,13 +11,13 @@ namespace TestProject1
             MyClass obj = new MyClass();
 
             // Act
-            obj.SettingFromFile = "ValueFromFile";
+            obj.SettingFromFile = "Value";
             obj.SaveSettings();
             obj.SettingFromFile = null; // Clear the value
             obj.LoadSettings();
 
             // Assert
-            Assert.Equal("ValueFromFile", obj.SettingFromFile);
+            Assert.Equal("Value", obj.SettingFromFile);
         }
 
         // Test saving and loading settings using ConfigurationManagerConfigurationProvider
@@ -47,13 +47,13 @@ namespace TestProject1
                 File.Delete("config.txt");
 
             // Act
-            obj.SettingFromFile = "ValueFromFile";
+            obj.SettingFromFile = "Value";
             obj.SaveSettings();
             obj.SettingFromFile = null; // Clear the value
             obj.LoadSettings();
 
             // Assert
-            Assert.Equal("ValueFromFile", obj.SettingFromFile);
+            Assert.Equal("Value", obj.SettingFromFile);
         }
 
         // Test loading settings using FileConfigurationProvider when setting doesn't exist
