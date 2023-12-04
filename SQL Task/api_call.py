@@ -2,29 +2,38 @@ import requests
 import pyodbc
 import sys
 
-access_key="8a8ee49aab31bb3ae779ae43fd9219e2"
+access_key = "8a8ee49aab31bb3ae779ae43fd9219e2"
 url = "https://positionstack.com/v1/forward"
 
-def insert_data(latitude:float,longitude:float):
-    connection = pyodbc.connect(connection_string = f'Driver={"SQL Server Native Client 11.0"};SERVER=X0NR;DATABASE=EPAM;Trusted_Connection=true;')
-    query = f'''
-    INSERT INTO Address (Geolocation) VALUES ({latitude},{longitude})
-    '''
-    cursor = connection.cursor()
-    cursor.execute(query)
-    cursor.commit()
-    connection.close()
-    
-    
-def get_data(address:str):
-    PARAMS={"ACCESS_KEY":access_key,"query":address}
-    response_body = requests.get(url,params=PARAMS)
-    data = response_body.json()
-    latitude = data['results'][0]['latitude']
-    longitude = data['results'][0]['longitude']
-    insert_data(latitude, longitude)
-    
-    
+def insert_data(latitude: float, longitude: float):
+    try:
+        connection = pyodbc.connect(
+            driver="{SQL Server Native Client 11.0}",
+            server="X0NR",
+            database="EPAM",
+            Trusted_Connection="yes"
+        )
+        cursor = connection.cursor()
+        query = "INSERT INTO Address (Latitude, Longitude) VALUES (?, ?)"
+        cursor.execute(query, (latitude, longitude))
+        connection.commit()
+        connection.close()
+    except pyodbc.Error as e:
+        print(f"Error inserting data into the database: {e}")
+
+def get_data(address: str):
+    try:
+        params = {"access_key": access_key, "query": address}
+        response = requests.get(url, params=params)
+        data = response.json()
+        if 'data' in data and len(data['data']) > 0:
+            latitude = data['data'][0]['latitude']
+            longitude = data['data'][0]['longitude']
+            insert_data(latitude, longitude)
+        else:
+            print("No location data found for the given address.")
+    except requests.RequestException as e:
+        print(f"Error fetching data from the API: {e}")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
