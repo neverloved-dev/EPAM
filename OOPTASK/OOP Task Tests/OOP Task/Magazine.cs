@@ -4,11 +4,24 @@ using System.Text;
 
 namespace OOP_Task
 {
-    public class Magazine : IDocument
+    public class Magazine : Document
     {
-        public string Title { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Publisher { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<string> Authors { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime DatePublished { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Number { get; set; }
+        public string Title { get; set; }
+        public string Publisher { get; set; }
+        public string ReleaseNumber { get; set; }
+        public DateTime DatePublished { get; set; }
+
+        public Magazine(string number):base(number,DocumentType.MAGAZINE,TimeSpan.FromDays(1)) { }
+
+        public void DisplayInfo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Magazine Search(string T)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

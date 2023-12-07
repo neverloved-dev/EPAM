@@ -4,9 +4,11 @@ using System.Text;
 
 namespace OOP_Task
 {
-    public interface IDocument
+    public enum DocumentType
     {
-        public void Search();
-        public void DisplayInfo();
+        PATENT,
+        BOOK,
+        LOCALIZED_BOOK,
+        MAGAZINE      
     }
 }
