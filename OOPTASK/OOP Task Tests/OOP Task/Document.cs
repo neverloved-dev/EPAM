@@ -4,31 +4,21 @@ using System.Text;
 
 namespace OOP_Task
 {
-    public abstract class Document : IDocument
+    public abstract class Document:IDocument
     {
-        protected string Number { get; }
+        protected string DocumentNumber { get; }
         protected DocumentType Type { get; }
         protected TimeSpan CacheTime { get; }
 
+        string IDocument.DocumentNumber => DocumentNumber;
+
         protected Document(string number,DocumentType type,TimeSpan cacheTime) 
         {
-            Number = number;
+            DocumentNumber = number;
             Type = type;
             CacheTime = cacheTime;
         }
         
-        public void SaveInfo()
-        {
-            throw new NotImplementedException();
-        }
-        public void DisplayInfo()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Search()
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

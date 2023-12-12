@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinaryStringsWithoutConsecutiveOnesTests", "BinaryStringsWithoutConsecutiveOnesTests\BinaryStringsWithoutConsecutiveOnesTests.csproj", "{79445D1E-803C-4E77-B444-4448428BB0C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinaryString", "BinaryString\BinaryString.csproj", "{98A63D15-A5B5-444E-8467-52BAD288F102}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79445D1E-803C-4E77-B444-4448428BB0C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79445D1E-803C-4E77-B444-4448428BB0C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79445D1E-803C-4E77-B444-4448428BB0C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79445D1E-803C-4E77-B444-4448428BB0C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98A63D15-A5B5-444E-8467-52BAD288F102}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98A63D15-A5B5-444E-8467-52BAD288F102}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98A63D15-A5B5-444E-8467-52BAD288F102}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98A63D15-A5B5-444E-8467-52BAD288F102}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D0BA5943-B425-4D03-A9E5-79596878A424}
+	EndGlobalSection
+EndGlobal
