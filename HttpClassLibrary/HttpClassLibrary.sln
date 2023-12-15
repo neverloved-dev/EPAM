@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClassLibrary", "HttpClassLibrary.csproj", "{10EA837A-F987-4124-B792-0637BDF1D04C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpTaskTests", "..\HttpTaskTests\HttpTaskTests.csproj", "{65DFE41C-7458-42D1-A4BD-8BCA1198123F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10EA837A-F987-4124-B792-0637BDF1D04C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10EA837A-F987-4124-B792-0637BDF1D04C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10EA837A-F987-4124-B792-0637BDF1D04C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10EA837A-F987-4124-B792-0637BDF1D04C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65DFE41C-7458-42D1-A4BD-8BCA1198123F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65DFE41C-7458-42D1-A4BD-8BCA1198123F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65DFE41C-7458-42D1-A4BD-8BCA1198123F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65DFE41C-7458-42D1-A4BD-8BCA1198123F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B6630859-2B9D-4F08-BC39-3E702653C3BB}
+	EndGlobalSection
+EndGlobal
