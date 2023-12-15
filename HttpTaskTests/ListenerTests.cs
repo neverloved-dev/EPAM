@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace HttpTaskTests
 {
-    public class HttpConsumerTests
+    public class ListenerTests
     {
         private readonly HttpClient _client;
 
-        public HttpConsumerTests(TestServerFixture fixture)
+        public ListenerTests(TestServerFixture fixture)
         {
             _client = fixture.Client;
         }
