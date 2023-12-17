@@ -11,5 +11,17 @@ namespace ORM_Classes.Models
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set;}
         public int ProductId { get; set; }
+
+        public Order(int id, Status status, DateTime createdDate, DateTime updatedDate, int productId)
+        {
+            ID = id;
+            Status = status;
+            CreatedDate = createdDate;
+            UpdatedDate = updatedDate;
+            ProductId = productId;
+        }
     }
+
+
+
 }
