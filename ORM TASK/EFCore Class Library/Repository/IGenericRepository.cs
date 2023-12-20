@@ -10,5 +10,6 @@ namespace EFCore_Class_Library.Repository
         public T GetSingle(int value);
         public T Update(T entity);
         public void Delete(int id);
+        public void Create(T entity);
     }
 }

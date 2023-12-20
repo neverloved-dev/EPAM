@@ -45,7 +45,7 @@ namespace EFCore_Class_Library.Repository
 
         public List<Order> OrderFilterByStatus(Status status)
         {
-            throw new NotImplementedException();
+            return _dbContext.Orders.Where(s=>s.Status == status).ToList();
         }
     }
 }
