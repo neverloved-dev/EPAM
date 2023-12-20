@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore Tests", "EFCore Tests.csproj", "{9DFB44D5-D2D9-437F-B046-7BB0CBB47B2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore Class Library", "..\EFCore Class Library\EFCore Class Library.csproj", "{026CFA03-9122-4809-941A-1D42D3235E07}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9DFB44D5-D2D9-437F-B046-7BB0CBB47B2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DFB44D5-D2D9-437F-B046-7BB0CBB47B2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DFB44D5-D2D9-437F-B046-7BB0CBB47B2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DFB44D5-D2D9-437F-B046-7BB0CBB47B2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{026CFA03-9122-4809-941A-1D42D3235E07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{026CFA03-9122-4809-941A-1D42D3235E07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{026CFA03-9122-4809-941A-1D42D3235E07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{026CFA03-9122-4809-941A-1D42D3235E07}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BD39B2FB-76C7-4C35-84A0-385724DEF9C6}
+	EndGlobalSection
+EndGlobal
