@@ -10,7 +10,6 @@ namespace ORM_TESTS
     {
         private ProductRepository productRepository = new ProductRepository();
         private OrderRepository orderRepository = new OrderRepository();
-        private readonly string connectionString = "Data Source=X0NR;Initial Catalog=ORM TASK;Integrated Security=True";
 
         [Fact]
         public void ProductSingleUpdate()
