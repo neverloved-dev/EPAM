@@ -1,3 +1,6 @@
+using EFCore_Class_Library.Repository;
+using EFCore_Class_Library.Models;
+
 namespace EFCore_Tests
 {
     public class UnitTest1

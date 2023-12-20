@@ -30,5 +30,10 @@ namespace EFCore_Class_Library.Repository
         {
             throw new NotImplementedException();
         }
+
+        public List<Order> OrderFilterByStatus(Status status)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
