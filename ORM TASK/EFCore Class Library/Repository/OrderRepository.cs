@@ -1,4 +1,5 @@
-﻿using EFCore_Class_Library.Models;
+﻿using EFCore_Class_Library.Context;
+using EFCore_Class_Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,9 +8,12 @@ namespace EFCore_Class_Library.Repository
 {
     public class OrderRepository : IGenericRepository<Order>
     {
+        private EfCoreDbContext _dbContext = new EfCoreDbContext();
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Order orderToDelete = _dbContext.Find<Order>(id);
+            _dbContext.Remove<Order>(orderToDelete);
+            _dbContext.SaveChanges();
         }
 
         public List<Order> GetAll()
