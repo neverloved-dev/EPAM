@@ -71,5 +71,14 @@ namespace ORM_Classes.Repositories
                 new { id = entity.ID, status = entity.Status, createdDate = entity.CreatedDate, updatedDate = entity.UpdatedDate, productId = entity.ProductId });
             connection.Close();
         }
+
+        public List<Order> OrderFilterByStatus(Status status)
+        {
+            var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var result = connection.Query<Order>("SELECT  * FROM orders WHERE Status = @status", new { status = status }).ToList();
+            connection.Close();
+            return result;
+        }
     }
 }

@@ -96,9 +96,13 @@ namespace ORM_TESTS
         [Fact]
         public void OrderFilterDelete()
         {
-            //Arrange
+            // Arrange
+            Order order = new Order(1, Status.NOT_STARTED, DateTime.Now, DateTime.Now, 1);
+            orderRepository.Create(order);
             //Act
+            List<Order> orders = orderRepository.OrderFilterByStatus(Status.NOT_STARTED);
             //Assert
+            Assert.NotEmpty(orders);
         }
     }
 }
