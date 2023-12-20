@@ -29,12 +29,25 @@ namespace EFCore_Class_Library.Repository
 
         public Product Update(Product entity)
         {
-            return _dbContext.Products.Save(entity);
+            var oldEntity = _dbContext.Products.Find(entity.Id);
+            oldEntity.Id = entity.Id;
+            oldEntity.Name = entity.Name;
+            oldEntity.Description = entity.Description;
+            oldEntity.Weight = entity.Weight;
+            oldEntity.Width = entity.Width;
+            oldEntity.Height = entity.Height;
+            oldEntity.Length = entity.Length;
+            _dbContext.Entry(oldEntity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _dbContext.SaveChanges();
+            return oldEntity;
+
         }
 
         public void Create(Product entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Products.Add(entity);
+            _dbContext.SaveChanges();
+
         }
     }
 }

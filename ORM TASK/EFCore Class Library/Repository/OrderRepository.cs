@@ -29,11 +29,18 @@ namespace EFCore_Class_Library.Repository
 
         public Order Update(Order entity)
         {
-            throw new NotImplementedException();
+            var oldEntity = _dbContext.Orders.Find(entity.ID);
+            oldEntity.Status = entity.Status;
+            oldEntity.CreatedDate = entity.CreatedDate;
+            oldEntity.UpdatedDate = entity.UpdatedDate;
+            _dbContext.Entry(oldEntity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _dbContext.SaveChanges();
+            return oldEntity;
         }
         public void Create(Order entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Orders.Add(entity);
+            _dbContext.SaveChanges();
         }
 
         public List<Order> OrderFilterByStatus(Status status)
