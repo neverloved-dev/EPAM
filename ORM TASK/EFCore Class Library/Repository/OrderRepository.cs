@@ -2,6 +2,7 @@
 using EFCore_Class_Library.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace EFCore_Class_Library.Repository
@@ -12,18 +13,18 @@ namespace EFCore_Class_Library.Repository
         public void Delete(int id)
         {
             Order orderToDelete = _dbContext.Find<Order>(id);
-            _dbContext.Remove<Order>(orderToDelete);
+            _dbContext.Orders.Remove(orderToDelete);
             _dbContext.SaveChanges();
         }
 
         public List<Order> GetAll()
         {
-            throw new NotImplementedException();
+            return _dbContext.Orders.ToList();
         }
 
         public Order GetSingle(int value)
         {
-            throw new NotImplementedException();
+            return _dbContext.Orders.Find(value);
         }
 
         public Order Update(Order entity)
