@@ -1,7 +1,6 @@
 using ORM_Classes;
 using ORM_Classes.Models;
 using ORM_Classes.Repositories;
-using ORM_Classes.Services;
 using System.Data.Common;
 
 namespace ORM_TESTS
