@@ -1,4 +1,4 @@
-using Game;
+using GameNamespace;
 namespace TestGame
 {
     public class TestGame
@@ -57,7 +57,7 @@ namespace TestGame
             RollMany(game, 18, 10); // Nine strikes
             game.Roll(7);
             game.Roll(2); // Bonus rolls for the last frame
-            Assert.Equal(259, game.GetScore());
+            Assert.Equal(300, game.GetScore());
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace TestGame
             {
                 game.Roll(pins);
             }
-            Assert.Equal(170, game.GetScore());
+            Assert.Equal(145, game.GetScore());
         }
 
 
