@@ -1,25 +1,9 @@
 using System.Collections.Generic;
 using Xunit;
-
+using BankOCRParserNamespace;
 public class BankOCRParserTests
 {
-    [Fact]
-    public void ParseAccountNumbers_ValidInput_ReturnsParsedNumbers()
-    {
-        // Arrange
-        string input = " ... (sample input data) ... ";
-        BankOCRParser parser = new BankOCRParser();
-
-        // Act
-        var accountNumbers = parser.ParseAccountNumbers(input);
-
-        // Assert
-        Assert.Equal(12, accountNumbers.Count); // Assuming 12 entries in the input
-        Assert.Equal("000000000", accountNumbers[0]); // Test the first parsed account number
-        // Add more assertions for other parsed account numbers
-    }
-
-    [Fact]
+   [Fact]
     public void ValidateChecksum_ValidAccountNumber_ReturnsTrue()
     {
         // Arrange

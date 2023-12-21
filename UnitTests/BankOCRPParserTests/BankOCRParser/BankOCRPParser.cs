@@ -2,30 +2,39 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace BankOCRParser
+namespace BankOCRParserNamespace
 {
-    public class BankOCRPParser
+    public class BankOCRParser
     {
         public List<string> ParseAccountNumbers(string input)
         {
             List<string> accountNumbers = new List<string>();
-            string[] lines = input.Split("\n");
+            string[] lines = input.Split("\n", StringSplitOptions.RemoveEmptyEntries);
 
-            for (int i = 0; i < lines.Length; i += 4)
+            const int digitsPerSet = 4; // Number of lines per digit set
+            const int charsPerLine = 27; // Assuming 27 characters per line
+
+            for (int i = 0; i < lines.Length; i += digitsPerSet)
             {
-                if (i + 3 >= lines.Length)
-                    break;
+                if (i + digitsPerSet > lines.Length)
+                {
+                    // Incomplete data for a digit set
+                    throw new FormatException("Incomplete data for a digit set.");
+                }
 
                 string[] digits = new string[9];
 
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < charsPerLine; j += 3)
                 {
-                    string line = lines[i + j];
-                    for (int k = 0; k < 9; k++)
+                    string digit = $"{lines[i].Substring(j, 3)}{lines[i + 1].Substring(j, 3)}{lines[i + 2].Substring(j, 3)}";
+
+                    if (digit.Length != 9)
                     {
-                        int startIndex = k * 3;
-                        digits[k] += line.Substring(startIndex, 3);
+                        // Invalid length for extracted digit
+                        throw new FormatException("Invalid length for extracted digit.");
                     }
+
+                    digits[j / 3] += digit;
                 }
 
                 accountNumbers.Add(string.Join("", digits));
@@ -33,6 +42,9 @@ namespace BankOCRParser
 
             return accountNumbers;
         }
+
+
+
 
         public bool ValidateChecksum(string accountNumber)
         {
