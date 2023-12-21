@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BankOCRParser\BankOCRParser.csproj" />
+  </ItemGroup>
+
 </Project>
