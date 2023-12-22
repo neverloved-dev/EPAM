@@ -8,7 +8,27 @@ namespace BearAndSteadyGeneNamespace
         public static int SteadyGeneSubstring(string s)
         {
             // Store the count of each character in the string
-            Dictionary<char, int> charCount = new Dictionary<char, int>();
+            Dictionary<char, int> charCount = new Dictionary<char, int>
+        {
+            { 'A', 0 },
+            { 'C', 0 },
+            { 'T', 0 },
+            { 'G', 0 }
+        };
+
+            foreach (char c in s)
+            {
+                if (charCount.ContainsKey(c))
+                    charCount[c]++;
+            }
+
+            // Calculate the required count for each character to be steady
+            int steadyCount = s.Length / 4;
+            foreach (char c in charCount.Keys)
+            {
+                charCount[c] = Math.Max(0, charCount[c] - steadyCount);
+            }
+
             foreach (char c in s)
             {
                 if (!charCount.ContainsKey(c))
@@ -16,8 +36,7 @@ namespace BearAndSteadyGeneNamespace
                 charCount[c]++;
             }
 
-            // Calculate the required count for each character to be steady
-            int steadyCount = s.Length / 4;
+
             foreach (char c in charCount.Keys)
             {
                 charCount[c] = Math.Max(0, charCount[c] - steadyCount);
