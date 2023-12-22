@@ -1,4 +1,4 @@
-﻿namespace EquiLibrary;
+﻿namespace EquiNamespace;
 
 public class Equi
 {

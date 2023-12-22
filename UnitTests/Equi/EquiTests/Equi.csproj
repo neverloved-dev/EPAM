@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EquiLibrary\EquiLibrary.csproj" />
+  </ItemGroup>
+
 </Project>
