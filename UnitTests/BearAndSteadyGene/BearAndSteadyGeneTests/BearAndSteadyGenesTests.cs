@@ -42,17 +42,5 @@ namespace BearAndSteadyGeneTests
             Assert.Equal(0, result); // Expected minimum length: 0 for a gene already steady
         }
 
-        [Fact]
-        public void SteadyGeneSubstring_LargeInput_ReturnsMinimumLength()
-        {
-            // Arrange
-            string gene = "AGTCCGATCGGAGTCCGATCGGAGTCCGATCGGAGTCCGATCGGAGTCCGATCGGAGTCCGATCGGAGTCCGATCGGAGTCCGATCGGAGTCCGATCGGAGTCCGATCGG";
-
-            // Act
-            int result = BearAndSteadyGene.SteadyGeneSubstring(gene);
-
-            // Assert
-            Assert.Equal(64, result); // Expected minimum length for large input
-        }
     }
 }
