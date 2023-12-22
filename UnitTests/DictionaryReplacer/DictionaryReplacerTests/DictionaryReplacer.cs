@@ -1,7 +1,7 @@
 using DictionaryReplacerNamespace;
 namespace DictionaryReplacerTests
 {
-    public class DictionaryReplacer
+    public class DictionaryReplacerTests
     {
         [Theory]
         [InlineData("", new string[0], "")]
