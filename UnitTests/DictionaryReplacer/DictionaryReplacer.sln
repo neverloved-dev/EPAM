@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictionaryReplacer", "DictionaryReplacer\DictionaryReplacer.csproj", "{B1014EC7-37E1-4178-BD86-5B1EED20C2BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictionaryReplacerTests", "DictionaryReplacerTests\DictionaryReplacerTests.csproj", "{D4E076BF-E31F-41E7-9EC8-D3015118187B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B1014EC7-37E1-4178-BD86-5B1EED20C2BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1014EC7-37E1-4178-BD86-5B1EED20C2BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1014EC7-37E1-4178-BD86-5B1EED20C2BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4E076BF-E31F-41E7-9EC8-D3015118187B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4E076BF-E31F-41E7-9EC8-D3015118187B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4E076BF-E31F-41E7-9EC8-D3015118187B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4E076BF-E31F-41E7-9EC8-D3015118187B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
