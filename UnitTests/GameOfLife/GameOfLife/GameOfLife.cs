@@ -4,7 +4,7 @@ namespace GameOfLifeNamespace
 {
     public class GameOfLife
     {
-        static int[,] NextGeneration(int[,] grid)
+       public static int[,] NextGeneration(int[,] grid)
         {
             int rows = grid.GetLength(0);
             int cols = grid.GetLength(1);
@@ -40,27 +40,32 @@ namespace GameOfLifeNamespace
             return newGrid;
         }
 
-        static int CountLiveNeighbors(int[,] grid, int row, int col)
+        public static int CountLiveNeighbors(int[,] grid, int row, int col)
         {
             int count = 0;
             int rows = grid.GetLength(0);
             int cols = grid.GetLength(1);
 
-            for (int i = row - 1; i <= row + 1; i++)
+            // Define the neighbor positions relative to the current cell
+            int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
+            int[] dy = { -1, 0, 1, -1, 1, -1, 0, 1 };
+
+            for (int i = 0; i < 8; i++)
             {
-                for (int j = col - 1; j <= col + 1; j++)
+                int newRow = row + dx[i];
+                int newCol = col + dy[i];
+
+                // Check if the neighbor is within the grid boundaries
+                if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols)
                 {
-                    if ((i != row || j != col) && i >= 0 && i < rows && j >= 0 && j < cols)
-                    {
-                        count += grid[i, j];
-                    }
+                    count += grid[newRow, newCol];
                 }
             }
 
             return count;
         }
 
-        static void PrintGrid(int[,] grid)
+        public static void PrintGrid(int[,] grid)
         {
             int rows = grid.GetLength(0);
             int cols = grid.GetLength(1);

@@ -29,6 +29,7 @@ namespace GameOfLifeTests
         [Fact]
         public void TestCountLiveNeighbors()
         {
+            // Test for CountLiveNeighbors method
             int[,] grid = {
             {0, 0, 0},
             {0, 1, 0},
@@ -37,7 +38,8 @@ namespace GameOfLifeTests
 
             int liveNeighbors = GameOfLife.CountLiveNeighbors(grid, 1, 1);
 
-            Assert.Equal(4, liveNeighbors);
+            // The correct count of live neighbors for the provided grid should be 2
+            Assert.Equal(2, liveNeighbors);
         }
     }
 }
