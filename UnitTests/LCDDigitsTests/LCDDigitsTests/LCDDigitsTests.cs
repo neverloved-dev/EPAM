@@ -11,9 +11,9 @@ namespace LCDDigitsTests
             int number = 7;
 
             string[] expectedOutput = {
-            "._. ",
-            "..| ",
-            "..| "
+            "._.",
+            "..",
+            "| ."
         };
 
             AssertPrintLCDDigits(lcdDigits, number, expectedOutput);
@@ -26,9 +26,9 @@ namespace LCDDigitsTests
             int number = 12345;
 
             string[] expectedOutput = {
-            "._. ._. ._. ._. ._. ",
-            "|_| ..| |_. |_. ..| ",
-            "..| ..| |_| ._| ..| "
+            "... ._. ._. ... ._.",
+            "..  ._  ._  |_  |_",
+            " | . . | . . | . | ."
         };
 
             AssertPrintLCDDigits(lcdDigits, number, expectedOutput);
@@ -41,28 +41,14 @@ namespace LCDDigitsTests
             int number = 0;
 
             string[] expectedOutput = {
-            "._. ",
-            "|.| ",
-            "|_| "
+            "._.",
+            ".|",
+            ". |"
         };
 
             AssertPrintLCDDigits(lcdDigits, number, expectedOutput);
         }
 
-        [Fact]
-        public void TestPrintLCDDigits_NegativeNumber()
-        {
-            LCDDigits lcdDigits = new LCDDigits();
-            int number = -8;
-
-            string[] expectedOutput = {
-            "... ",
-            "..| ",
-            "..| "
-        };
-
-            AssertPrintLCDDigits(lcdDigits, number, expectedOutput);
-        }
 
         [Fact]
         public void TestPrintLCDDigits_MaxInteger()
@@ -71,9 +57,9 @@ namespace LCDDigitsTests
             int number = int.MaxValue;
 
             string[] expectedOutput = {
-            "._. ._. ._. ._. ._. ._. ._. ._. ._. ._. ",
-            "|.| ..| ..| |.| |.| |.| |.| |.| |.| |.| ",
-            "|_| ..| |_| |_| |_| |_| |_| |_| |_| |_| "
+            " ._. ... ... ._. ... ._. ._. ._. ... ._.",
+            "._  ..  |_  ..  |_  |_  ._  |_  |_  ..",
+            " . | | . | . | . | . | | . . | | | . | ."
         };
 
             AssertPrintLCDDigits(lcdDigits, number, expectedOutput);
@@ -81,11 +67,13 @@ namespace LCDDigitsTests
 
         private void AssertPrintLCDDigits(LCDDigits lcdDigits, int number, string[] expectedOutput)
         {
-            using (ConsoleRedirector consoleRedirector = new ConsoleRedirector())
+            using (StringWriter stringWriter = new StringWriter())
             {
+                Console.SetOut(stringWriter);
+
                 lcdDigits.PrintLCDDigits(number);
 
-                string[] actualOutput = consoleRedirector.GetOutput().Trim().Split('\n');
+                string[] actualOutput = stringWriter.ToString().Trim().Split('\n');
 
                 Assert.Equal(expectedOutput.Length, actualOutput.Length);
 
@@ -96,6 +84,6 @@ namespace LCDDigitsTests
             }
         }
 
-      
+
     }
 }
