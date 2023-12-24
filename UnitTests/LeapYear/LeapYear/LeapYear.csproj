@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LeapYearChecker\LeapYearChecker.csproj" />
+  </ItemGroup>
+
 </Project>

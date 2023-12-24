@@ -1,3 +1,5 @@
+using LeapYearCheckerNamespace;
+
 namespace LeapYear
 {
     public class LeapYearCheckerTests
@@ -47,3 +49,4 @@ namespace LeapYear
             Assert.False(isLeapYear);
         }
     }
+}
