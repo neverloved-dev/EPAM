@@ -1,3 +1,5 @@
+using HarryPotterClasses;
+
 namespace HarryPotter
 {
     public class HarryPotterTests
