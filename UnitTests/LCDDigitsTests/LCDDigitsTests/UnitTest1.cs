@@ -1,3 +1,5 @@
+using LCDDigitsNamespace;
+
 namespace LCDDigitsTests
 {
     public class LCDDigitsTests
