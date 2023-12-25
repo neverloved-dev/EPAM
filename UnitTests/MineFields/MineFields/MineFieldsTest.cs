@@ -19,7 +19,7 @@ namespace MineFields
             string actualHintField = mineField.GenerateHintField();
 
             // Assert
-            string expectedHintField = "*100\n2210\n1110\n0000";
+            string expectedHintField = "*211\n12*1\n0111\n0000";
             Assert.Equal(expectedHintField, actualHintField);
         }
 
@@ -61,5 +61,4 @@ namespace MineFields
             Assert.Equal(expectedHintField, actualHintField);
         }
     }
-}
 }
