@@ -29,9 +29,9 @@ namespace NaturalOrderStringSorting
         {
             // Arrange
             List<string> stringList = new List<string>
-            {
-                "1A", "2S", "10Z", "2B", "20C", "3D"
-            };
+             {
+                 "1A", "2S", "10Z", "2B", "20C", "3D"
+             };
             NaturalStringComparer comparer = new NaturalStringComparer();
 
             // Act
@@ -39,11 +39,10 @@ namespace NaturalOrderStringSorting
 
             // Assert
             List<string> expected = new List<string>
-            {
-                "1A", "2B", "2S", "3D", "10Z", "20C"
-            };
+              {
+                 "1A", "2B", "2S", "3D", "10Z", "20C"
+               };
             Assert.Equal(expected, stringList);
         }
     }
-}
 }

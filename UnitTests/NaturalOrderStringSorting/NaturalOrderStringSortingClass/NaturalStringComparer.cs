@@ -13,51 +13,46 @@ namespace NaturalOrderStringSortingClass
 
         private int NaturalCompare(string str1, string str2)
         {
-            int len1 = str1.Length;
-            int len2 = str2.Length;
-            int marker1 = 0;
-            int marker2 = 0;
+            return AlphanumComparator.Compare(str1, str2);
+        }
+    }
 
-            while (marker1 < len1 && marker2 < len2)
+    internal class AlphanumComparator
+    {
+        public static int Compare(string str1, string str2)
+        {
+            string[] split1 = Split(str1);
+            string[] split2 = Split(str2);
+
+            for (int i = 0; i < Math.Min(split1.Length, split2.Length); i++)
             {
-                char ch1 = str1[marker1];
-                char ch2 = str2[marker2];
-
-                int space1 = 0, space2 = 0;
-                while (marker1 < len1 && (space1 = char.IsDigit(str1[marker1]) ? 1 : 0) == 0)
+                int result;
+                if (split1[i] != split2[i] && (result = PartCompare(split1[i], split2[i])) != 0)
                 {
-                    marker1++;
+                    return result;
                 }
-                while (marker2 < len2 && (space2 = char.IsDigit(str2[marker2]) ? 1 : 0) == 0)
-                {
-                    marker2++;
-                }
-
-                if (space1 == 0 && space2 == 0)
-                {
-                    int compareResult = ch1.CompareTo(ch2);
-                    if (compareResult != 0)
-                    {
-                        return compareResult;
-                    }
-                }
-                else
-                {
-                    string num1 = str1.Substring(marker1, space1);
-                    string num2 = str2.Substring(marker2, space2);
-
-                    int numberCompareResult = int.Parse(num1).CompareTo(int.Parse(num2));
-                    if (numberCompareResult != 0)
-                    {
-                        return numberCompareResult;
-                    }
-                }
-
-                marker1++;
-                marker2++;
             }
 
-            return len1 - len2;
+            return split1.Length.CompareTo(split2.Length);
+        }
+
+        private static string[] Split(string s)
+        {
+            return System.Text.RegularExpressions.Regex.Split(s.Replace(" ", ""), "([0-9]+)");
+        }
+
+        private static int PartCompare(string left, string right)
+        {
+            bool leftIsNum = int.TryParse(left, out int leftNum);
+            bool rightIsNum = int.TryParse(right, out int rightNum);
+
+            if (leftIsNum && rightIsNum)
+            {
+                return leftNum.CompareTo(rightNum);
+            }
+
+            return left.CompareTo(right);
         }
     }
 }
+
