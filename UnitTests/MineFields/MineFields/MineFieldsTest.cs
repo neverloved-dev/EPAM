@@ -1,3 +1,4 @@
+using MineFieldNamespace;
 namespace MineFields
 {
     public class MineFieldsTest
