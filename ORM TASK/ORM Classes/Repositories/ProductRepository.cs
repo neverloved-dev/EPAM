@@ -12,7 +12,7 @@ namespace ORM_Classes.Repositories
 {
     public class ProductRepository : IGenericRepository<Product>
     {
-        private readonly string _connectionString = "Data Source=X0NR;Initial Catalog=ORM TASK;Integrated Security=True";
+        private readonly string _connectionString = "Data Source=X0NR;Initial Catalog=ORM TASK;Integrated Security=True;Encrypt=False";
         public void Delete(int productId)
         {
             using (var connection = new SqlConnection(_connectionString))

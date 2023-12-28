@@ -59,4 +59,9 @@
   <ItemGroup>
     <Folder Include="Properties" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="orders.sql" />
+    <Build Include="products.sql" />
+    <Build Include="AddForeignKeyToOrders.sql" />
+  </ItemGroup>
 </Project>
