@@ -24,5 +24,6 @@ namespace EFCore_Class_Library.Models
             Width = width;
             Length = length;
         }
+        public Product() { }
     }
 }

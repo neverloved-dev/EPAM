@@ -20,5 +20,6 @@ namespace EFCore_Class_Library.Models
             UpdatedDate = updatedDate;
             ProductId = productId;
         }
+        public Order() { }
     }
 }
