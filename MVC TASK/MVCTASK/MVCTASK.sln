@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCTASK", "MVCTASK\MVCTASK.csproj", "{93BA924C-4C6E-4235-A2CC-448201920FD7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC TESTS", "MVC TESTS\MVC TESTS.csproj", "{7BBAFE1C-19FC-4C68-9B03-84F89EDE981C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{93BA924C-4C6E-4235-A2CC-448201920FD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93BA924C-4C6E-4235-A2CC-448201920FD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93BA924C-4C6E-4235-A2CC-448201920FD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BBAFE1C-19FC-4C68-9B03-84F89EDE981C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BBAFE1C-19FC-4C68-9B03-84F89EDE981C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BBAFE1C-19FC-4C68-9B03-84F89EDE981C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BBAFE1C-19FC-4C68-9B03-84F89EDE981C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
