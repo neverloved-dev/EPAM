@@ -1,12 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Products";
 }
+@model Product
 
 <div class="text-center">
     <h1 class="display-2"> List of all product</h1>
     <div class="list-group text-center">
         <ul class="list-group">
-            <li class="list-group-item"></li>
+            <li class="list-group-item">@Html.LabelFor(m=>m.Name)</li>
         </ul>
     </div>
 </div>
