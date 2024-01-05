@@ -1,13 +1,31 @@
 ﻿@{
     ViewData["Title"] = "Products";
 }
-@model Product
+@model List<Product>
 
 <div class="text-center">
-    <h1 class="display-2"> List of all product</h1>
+    <h1 class="display-2">List of all products</h1>
     <div class="list-group text-center">
-        <ul class="list-group">
-            <li class="list-group-item">@Html.LabelFor(m=>m.Name)</li>
-        </ul>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Category ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <td>@product.Id</td>
+                        <td>@product.Name</td>
+                        <td>@product.Price</td>
+                        <td>@product.CategoryId</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
