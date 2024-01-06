@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MVCTASK.Controllers;
 
 namespace MVCTASK.Models;
 
@@ -8,4 +9,6 @@ public class DataContext : DbContext
     {
         
     }
+    public DbSet<Product>Products { get; set; }
+    public DbSet<Category> Categories { get; set; }
 }

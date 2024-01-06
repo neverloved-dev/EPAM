@@ -8,10 +8,11 @@ namespace MVCTASK.Controllers;
 public class CategoryController : Controller
 {
     private readonly ILogger<CategoryController> _logger;
-
-    public CategoryController(ILogger<CategoryController> logger)
+    private DataContext _context;
+    public CategoryController(ILogger<CategoryController> logger,DataContext context)
     {
         _logger = logger;
+        _context = context;
     }
 
     public IActionResult Categories()
