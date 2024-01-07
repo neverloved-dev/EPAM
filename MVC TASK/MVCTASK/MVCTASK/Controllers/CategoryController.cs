@@ -17,6 +17,27 @@ public class CategoryController : Controller
 
     public IActionResult Categories()
     {
+        List<Category> categories = _context.Categories.ToList();
+        return View(categories);
+    }
+
+    public IActionResult CategoryForm()
+    {
         return View();
+    }
+
+    public void UpdateCategory(Category category,int categoryId)
+    {
+        var oldCategory = _context.Categories.Find(categoryId);
+        oldCategory.Supplier = category.Supplier;
+        oldCategory.Name = category.Name;
+        _context.Categories.Update(oldCategory);
+        _context.SaveChanges();
+    }
+
+    public void AddNewCategory(Category newCategory)
+    {
+        _context.Categories.Add(newCategory);
+        _context.SaveChanges();
     }
 }
