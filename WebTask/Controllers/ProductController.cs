@@ -24,6 +24,11 @@ namespace WebTask.Controllers
         {
             return Ok(_productService.Get(id));
         }
+        [HttpGet]
+        public IActionResult GetProductsPaginated(int page, int pageSize,int categoryId)
+        {
+            return Ok(_productService.GetProductsPaginated(page,pageSize, categoryId));
+        }
 
         [HttpPut("{id}")]
         public IActionResult UpdateProduct([FromBody]Product product,int id)

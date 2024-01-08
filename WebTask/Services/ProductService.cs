@@ -46,4 +46,9 @@ public class ProductService:IGenericService<Product>
     {
         throw new NotImplementedException();
     }
+
+    internal object? GetProductsPaginated(int page, int pageSize, int categoryId)
+    {
+        throw new NotImplementedException();
+    }
 }
