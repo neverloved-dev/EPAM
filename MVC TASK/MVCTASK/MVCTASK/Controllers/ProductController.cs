@@ -42,4 +42,46 @@ public class ProductController : Controller
         return new SelectList(categories, "Id", "Name", selectedCategory);
     }
     
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult New(Product product)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Products.Add(product);
+            return RedirectToAction("ListAll");
+        }
+
+        ViewBag.Categories = GetCategoriesSelectList();
+        return View(product);
+    }
+    
+    
+    // GET: Product/Edit/{id}
+    public ActionResult Edit(int id)
+    {
+        var product = _context.Products.Find(id);
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        ViewBag.Categories = GetCategoriesSelectList(product.CategoryId);
+        return View(product);
+    }
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Edit(Product product)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Products.Update(product);
+            return RedirectToAction("ListAll");
+        }
+
+        ViewBag.Categories = GetCategoriesSelectList(product.CategoryId);
+        return View(product);
+    }
+
 }
