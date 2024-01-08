@@ -27,9 +27,11 @@ public class CategoryService:IGenericService<Category>
         _context.SaveChanges();
     }
 
-    public void Update(Category entity)
+    public void Update(Category entity,int id)
     {
-        _context.Categories.Update(entity);
+        var categoryToUpdate = _context.Categories.Find(id);
+        categoryToUpdate.Supplier = entity.Supplier;
+        categoryToUpdate.Name = entity.Name;
         _context.SaveChanges();
     }
 

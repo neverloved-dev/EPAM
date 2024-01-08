@@ -28,7 +28,7 @@ public class ProductService:IGenericService<Product>
         _context.SaveChanges();
     }
 
-    public void Update(Product entity)
+    public void Update(Product entity,int id)
     {
         _context.Products.Update(entity);
         _context.SaveChanges();
