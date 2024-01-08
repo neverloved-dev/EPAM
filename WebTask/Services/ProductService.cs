@@ -1,4 +1,5 @@
 ﻿using WebTask.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WebTask.Services;
 
@@ -44,11 +45,22 @@ public class ProductService:IGenericService<Product>
 
     public Product Get(int id)
     {
-        throw new NotImplementedException();
+        return _context.Products.Find(id);
     }
 
-    internal object? GetProductsPaginated(int page, int pageSize, int categoryId)
+    public List<Product> GetProductsPaginated(int page, int pageSize, int categoryId)
     {
-        throw new NotImplementedException();
+        IQueryable<Product> query = _context.Products;
+
+        if (categoryId != 0)
+        {
+            query = query.Where(p => p.CategoryId == categoryId);
+        }
+
+        int skipAmount = page * pageSize;
+
+        return query.Skip(skipAmount)
+                    .Take(pageSize)
+                    .ToList();
     }
 }
