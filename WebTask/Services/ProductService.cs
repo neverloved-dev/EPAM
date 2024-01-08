@@ -30,7 +30,10 @@ public class ProductService:IGenericService<Product>
 
     public void Update(Product entity,int id)
     {
-        _context.Products.Update(entity);
+       var productToUpdate = _context.Products.Find(id);
+        productToUpdate.Name = entity.Name;
+        productToUpdate.Price = entity.Price;
+        productToUpdate.CategoryId = entity.CategoryId;
         _context.SaveChanges();
     }
 
