@@ -7,6 +7,7 @@ namespace EFCore_Tests
     {
         private ProductRepository productRepository = new ProductRepository();
         private OrderRepository orderRepository = new OrderRepository();
+        // constructor with an in memory database and then delete everything after the tests are over
 
         [Fact]
         public void ProductSingleUpdate()

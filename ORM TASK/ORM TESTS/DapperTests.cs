@@ -37,11 +37,11 @@ namespace ORM_TESTS
         public void ProductSingleCreate()
         {
             //Arrange
-            Product product = new Product(3, "Fan", "Just a fan", 2.0, 1.0, 3.0, 4.0);
+            Product product = new Product(5, "Fan", "Just a fan", 2.0, 1.0, 3.0, 4.0);
             //Act
             productRepository.Create(product);
             //Assert
-           Product resultProduct = productRepository.GetSingle(3);
+           Product resultProduct = productRepository.GetSingle(5);
             Assert.Equal(resultProduct,product);
         }
 

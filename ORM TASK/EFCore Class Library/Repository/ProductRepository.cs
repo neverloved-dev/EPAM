@@ -24,7 +24,8 @@ namespace EFCore_Class_Library.Repository
 
         public Product GetSingle(int value)
         {
-            return _dbContext.Products.Find(value);
+            var result =  _dbContext.Products.Where(p => p.Id == value).ToList();
+            return result.Single();
         }
 
         public Product Update(Product entity)
