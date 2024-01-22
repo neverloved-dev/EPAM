@@ -1,31 +1,114 @@
 ﻿using ADO.NET.Models;
+using Microsoft.Data.SqlClient;
 
 namespace ADO.NET;
 
-public class ProductRepository:IGenericRepository<Product>
+public class ProductRepository
 {
-    public void CreateT(Product entity)
+    private readonly string connectionString;
+
+    public ProductRepository(string connectionString)
     {
-        throw new NotImplementedException();
+        this.connectionString = connectionString;
     }
 
-    public List<Product> GetAll()
+    public void InsertProduct(Product product)
     {
-        throw new NotImplementedException();
+        using (var connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+
+            string query = "INSERT INTO Products (Name, Description, Weight, Height, Width, Length) " +
+                           "VALUES (@Name, @Description, @Weight, @Height, @Width, @Length)";
+
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@Name", product.Name);
+                command.Parameters.AddWithValue("@Description", product.Description);
+                command.Parameters.AddWithValue("@Weight", product.Weight);
+                command.Parameters.AddWithValue("@Height", product.Height);
+                command.Parameters.AddWithValue("@Width", product.Width);
+                command.Parameters.AddWithValue("@Length", product.Length);
+
+                command.ExecuteNonQuery();
+            }
+        }
     }
 
-    public Product Get(int id)
+    public Product GetProductById(int productId)
     {
-        throw new NotImplementedException();
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+
+            string query = "SELECT Id, Name, Description, Weight, Height, Width, Length " +
+                           "FROM Products WHERE Id = @Id";
+
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@Id", productId);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new Product(
+                            (int)reader["Id"],
+                            (string)reader["Name"],
+                            (string)reader["Description"],
+                            (double)reader["Weight"],
+                            (double)reader["Height"],
+                            (double)reader["Width"],
+                            (double)reader["Length"]
+                        );
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
-    public void Delete(int id)
+    public void UpdateProduct(Product product)
     {
-        throw new NotImplementedException();
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+
+            string query = "UPDATE Products SET Name = @Name, Description = @Description, " +
+                           "Weight = @Weight, Height = @Height, Width = @Width, Length = @Length " +
+                           "WHERE Id = @Id";
+
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@Id", product.Id);
+                command.Parameters.AddWithValue("@Name", product.Name);
+                command.Parameters.AddWithValue("@Description", product.Description);
+                command.Parameters.AddWithValue("@Weight", product.Weight);
+                command.Parameters.AddWithValue("@Height", product.Height);
+                command.Parameters.AddWithValue("@Width", product.Width);
+                command.Parameters.AddWithValue("@Length", product.Length);
+
+                command.ExecuteNonQuery();
+            }
+        }
     }
 
-    public Product Update(Product entity, int id)
+    public void DeleteProduct(int productId)
     {
-        throw new NotImplementedException();
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+
+            string query = "DELETE FROM Products WHERE Id = @Id";
+
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@Id", productId);
+
+                command.ExecuteNonQuery();
+            }
+        }
     }
+
 }
