@@ -5,12 +5,13 @@ namespace MVCTASK.Models;
 
 public class Product
 {
-    public int Id { get; private set; }
+    [Key]
+    public int ProductID { get; private set; }
     [Required(ErrorMessage = "Please enter a product name")]
-    public string Name { get; set; }
+    public string ProductName { get; set; }
     [Required(ErrorMessage = "Please enter a product price!")]
     [Range(0.01, Double.MaxValue, ErrorMessage = "Price must be greater than zero")]
-    public decimal Price { get; set; }
+    public decimal UnitPrice { get; set; }
     [Required(ErrorMessage = "You must select a category")]
-    public int CategoryId { get; set; }
+    public int CategoryID { get; set; }
 }

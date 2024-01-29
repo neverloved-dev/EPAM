@@ -29,8 +29,8 @@ public class CategoryController : Controller
     public void UpdateCategory(Category category,int categoryId)
     {
         var oldCategory = _context.Categories.Find(categoryId);
-        oldCategory.Supplier = category.Supplier;
-        oldCategory.Name = category.Name;
+        oldCategory.Description = category.Description;
+        oldCategory.CategoryName = category.CategoryName;
         _context.Categories.Update(oldCategory);
         _context.SaveChanges();
     }

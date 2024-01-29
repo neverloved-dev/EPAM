@@ -66,7 +66,7 @@ public class ProductController : Controller
             return NotFound();
         }
 
-        ViewBag.Categories = GetCategoriesSelectList(product.CategoryId);
+        ViewBag.Categories = GetCategoriesSelectList(product.CategoryID);
         return View(product);
     }
     
@@ -80,7 +80,7 @@ public class ProductController : Controller
             return RedirectToAction("ListAll");
         }
 
-        ViewBag.Categories = GetCategoriesSelectList(product.CategoryId);
+        ViewBag.Categories = GetCategoriesSelectList(product.CategoryID);
         return View(product);
     }
 

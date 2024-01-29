@@ -1,8 +1,11 @@
-﻿namespace MVCTASK.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MVCTASK.Models;
 
 public class Category
 {
-    public int Id { get; private set; }
-    public string Name { get; set; }
-    public string Supplier { get; set; }
+    [Key]
+    public int CategoryID { get; private set; }
+    public string CategoryName { get; set; }
+    public string Description { get; set; }
 }
