@@ -11,11 +11,13 @@ namespace Task2
                 throw new ArgumentNullException("Input string is null.");
             }
 
+           string stringValueTrimmed = stringValue.Trim();
+            
             int num = 0;
             int startIndex = 0;
-            int length = stringValue.Length;
+            int length = stringValueTrimmed.Length;
             
-            while (startIndex < length && char.IsWhiteSpace(stringValue[startIndex]))
+            while (startIndex < length && char.IsWhiteSpace(stringValueTrimmed[startIndex]))
             {
                 startIndex++;
             }
@@ -25,7 +27,7 @@ namespace Task2
                 throw new FormatException("Input string does not represent a valid integer.");
             }
 
-            char firstChar = stringValue[startIndex];
+            char firstChar = stringValueTrimmed[startIndex];
 
             if (firstChar == '+' || firstChar == '-')
             {
@@ -41,7 +43,7 @@ namespace Task2
 
             for (int i = startIndex; i < length; i++)
             {
-                char c = stringValue[i];
+                char c = stringValueTrimmed[i];
                 
                 if (c == ' ' &&  i == length - 1)
                 {
