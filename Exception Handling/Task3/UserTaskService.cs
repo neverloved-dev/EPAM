@@ -18,7 +18,7 @@ namespace Task3
             {
                 if (userId < 0)
                 {
-                    throw new ArgumentException("User not found: userId should be a positive value.");
+                    throw new ArgumentException("Invalid userId: userId should be a positive value.");
                 }
 
 
