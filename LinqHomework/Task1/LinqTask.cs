@@ -19,8 +19,12 @@ namespace Task1
             IEnumerable<Supplier> suppliers
         )
         {
-            var resultList = customers.Min(customer => customer.Orders);
-            resultList.Join(suppliers,)
+            return customers.GroupJoin(
+                suppliers,
+                customer => new { customer.City, customer.Country },
+                supplier => new { supplier.City, supplier.Country },
+                (customer, matchingSuppliers) => (customer, matchingSuppliers)
+            );
         }
 
         public static IEnumerable<(Customer customer, IEnumerable<Supplier> suppliers)> Linq2UsingGroup(
@@ -28,17 +32,12 @@ namespace Task1
             IEnumerable<Supplier> suppliers
         )
         {
-            var resultList = customers.Select(customer =>
-           new
-           {
-               Customer = customer,
-               firstOrderDate = customer.Orders.Min(order => order.OrderDate)
-           }
-       )
-           .OrderBy(record => record.firstOrderDate.Year)
-                .ThenByDescending(record => record.firstOrderDate.Month)
-                .OrderBy(record => record.Customer.CompanyName).ToList();
-            return (IEnumerable<(Customer customer, IEnumerable<Supplier> suppliers)>)resultList;
+            return customers.GroupJoin(
+                suppliers,
+                customer => new { customer.City, customer.Country },
+                supplier => new { supplier.City, supplier.Country },
+                (customer, matchingSuppliers) => (customer, matchingSuppliers)
+            );
         }
 
         public static IEnumerable<Customer> Linq3(IEnumerable<Customer> customers, decimal limit)
@@ -99,23 +98,12 @@ namespace Task1
             decimal expensive
         )
         {
-            var productList = products.GroupBy(product =>
-            {
-                if (0 <= product.UnitPrice && product.UnitPrice <= cheap)
-                {
-                    return cheap;
-                }
-                else if (cheap < product.UnitPrice && product.UnitPrice <= middle)
-                {
-                    return middle;
-                }
-                else
-                {
-                    return expensive;
-                }
-            })
-                .Select(group => (category: group.Key, products: group));
-            return (IEnumerable<(decimal category, IEnumerable<Product> products)>)productList;
+            var result = from p in products
+                group p by p.Category into g
+                select (category: g.Key, products: g.ToList());
+
+            return (IEnumerable<(decimal category, IEnumerable<Product> products)>)result;
+            
         }
 
         public static IEnumerable<(string city, int averageIncome, int averageIntensity)> Linq9(
