@@ -10,8 +10,8 @@ namespace Task1
     {
         public static IEnumerable<Customer> Linq1(IEnumerable<Customer> customers, decimal limit)
         {
-            var customerList = customers.Select(x => x.Orders.Length > limit).ToList();
-            return (IEnumerable<Customer>)customerList;
+            var customerList = customers.Where(customer => customer.Orders.Length > limit);
+            return customerList;
         }
 
         public static IEnumerable<(Customer customer, IEnumerable<Supplier> suppliers)> Linq2(
@@ -19,13 +19,8 @@ namespace Task1
             IEnumerable<Supplier> suppliers
         )
         {
-            var resultList = customers.Select(customer => 
-                new{
-                 Customer = customer,
-                firstOrderDate = customer.Orders.Min(order=>order.OrderDate)
-                }
-            ).ToList();
-            return (IEnumerable<(Customer customer, IEnumerable<Supplier> suppliers)>)resultList;
+            var resultList = customers.Min(customer => customer.Orders);
+            resultList.Join(suppliers,)
         }
 
         public static IEnumerable<(Customer customer, IEnumerable<Supplier> suppliers)> Linq2UsingGroup(
