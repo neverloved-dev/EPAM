@@ -25,7 +25,7 @@ namespace Task3
 
                 var user = _userDao.GetUser(userId);
                 if (user == null)
-                    throw new ArgumentException("User not found: The specified user does not exist.");
+                    throw new NullReferenceException("User not found: The specified user does not exist.");
 
                 var tasks = user.Tasks;
                 foreach (var t in tasks)
@@ -48,11 +48,19 @@ namespace Task3
                 Console.WriteLine(ex.Message);
                 return -3;
             }
-            catch (Exception ex)
+            catch (NullReferenceException ex)
             {
                 Console.WriteLine(ex.Message);
                 return -2;
             }
+        }
+        public bool DoesUserExist(int userId)
+        {
+            // Get the user by userId
+            var user = _userDao.GetUser(userId);
+
+            // If the user is not null, then the user exists
+            return user != null;
         }
     }
 }

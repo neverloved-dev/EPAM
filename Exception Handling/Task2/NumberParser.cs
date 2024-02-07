@@ -55,10 +55,27 @@ namespace Task2
                     int digit = c - '0';
                     try
                     {
-                        checked
+                        if (isNegative)
                         {
-                            num = num * 10 + digit;
+                            if (num < (int.MinValue + digit) / 10)
+                            {
+                                throw new OverflowException($"Input value {stringValue} is out of Int32 range.");
+                            }
                         }
+                        else
+                        {
+                            if (num > (int.MaxValue - digit) / 10)
+                            {
+                                throw new OverflowException($"Input value {stringValue} is out of Int32 range.");
+                            }
+                        }
+                        // Check for potential overflow before performing the multiplication operation
+                        if ((!isNegative && num > (int.MaxValue - digit) / 10) || (isNegative && -num < (int.MinValue + digit) / 10))
+                        {
+                            throw new OverflowException($"Input value {stringValue} is out of Int32 range.");
+                        }
+
+                            num = num * 10 + digit;
                     }
                     catch (OverflowException)
                     {

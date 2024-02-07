@@ -20,6 +20,15 @@ namespace Task3
                 return false;
             }
 
+            // Check if user exists before adding the task
+            if (!_taskService.DoesUserExist(userId))
+            {
+                model.AddAttribute("action_result", "User not found");
+                return false;
+            }
+
+            // If user exists, add the task
+            _taskService.AddTaskForUser(userId, new UserTask(description));
             return true;
         }
 
@@ -28,7 +37,7 @@ namespace Task3
             var task = new UserTask(description);
             int result = _taskService.AddTaskForUser(userId, task);
             if (result == -1)
-                return "Invalid userId";
+                return "Invalid userId"; // Everything caught in same exception handler, make it more specific. 
 
             if (result == -2)
                 return "User not found";
