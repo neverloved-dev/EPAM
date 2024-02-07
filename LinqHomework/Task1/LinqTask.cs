@@ -42,15 +42,29 @@ namespace Task1
 
         public static IEnumerable<Customer> Linq3(IEnumerable<Customer> customers, decimal limit)
         {
-            var resultList = customers.Where(customer => !customer.PostalCode.All(char.IsDigit) || customer.Region == "undefined" || customer.PostalCode.All(c=>c!='('&&c!=')'));
-            return resultList;
+            var customerList = customers.Where(customer => customer.Orders.Length > limit)
+            .OrderBy(customer => customer.Orders.Select(order => order.OrderDate.Year))
+                .ThenBy(customer => customer.Orders.Select(order => order.OrderDate.Month))
+                .ThenByDescending(customer => customer.Orders.Select(order => order.OrderDate.Date).First())
+                .ThenBy(customer => customer.CompanyName);
+            return customerList;
         }
 
         public static IEnumerable<(Customer customer, DateTime dateOfEntry)> Linq4(
             IEnumerable<Customer> customers
         )
         {
-            throw new NotImplementedException();
+            {
+                var result = customers.Select(customer =>
+                {
+                    var dateOfEntry = customer.Orders.OrderBy(order => order.OrderDate)
+                        .Select(order => order.OrderDate)
+                        .FirstOrDefault();
+                    return (customer, dateOfEntry);
+                });
+
+                return result;
+            }
         }
 
         public static IEnumerable<(Customer customer, DateTime dateOfEntry)> Linq5(
