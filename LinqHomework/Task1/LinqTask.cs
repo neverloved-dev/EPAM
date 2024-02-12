@@ -42,12 +42,15 @@ namespace Task1
 
         public static IEnumerable<Customer> Linq3(IEnumerable<Customer> customers, decimal limit)
         {
+            var customerList = customers.Where(customer=> customer.Orders.Any(order => order.Total>limit));
+            return customerList;
+            /*
             var customerList = customers.Where(customer => customer.Orders.Length > limit)
             .OrderBy(customer => customer.Orders.Select(order => order.OrderDate.Year))
                 .ThenBy(customer => customer.Orders.Select(order => order.OrderDate.Month))
                 .ThenByDescending(customer => customer.Orders.Select(order => order.OrderDate.Date).First())
                 .ThenBy(customer => customer.CompanyName);
-            return customerList;
+            return customerList;*/
         }
 
         public static IEnumerable<(Customer customer, DateTime dateOfEntry)> Linq4(
@@ -138,10 +141,11 @@ namespace Task1
             var result = from p in products
                 group p by p.Category into g
                 select (category: Convert.ToDecimal(g.Key),
-                    products: g.ToList());
+                    products: g.AsEnumerable());
 
             return (IEnumerable<(decimal category, IEnumerable<Product> products)>)result;
         }
+        
 
         public static IEnumerable<(string city, int averageIncome, int averageIntensity)> Linq9(
             IEnumerable<Customer> customers
@@ -151,7 +155,7 @@ namespace Task1
                 .GroupBy(c => c.City)
                 .Select(cityGroup => (
                     city: cityGroup.Key,
-                    averageIncome: cityGroup.Any() ? (int)cityGroup.Average(c => c.Orders.Any() ? c.Orders.Average(l => l.Total) : 0) : 0,
+                    averageIncome: cityGroup.Any() ? (int)(cityGroup.SelectMany(c => c.Orders).Any() ? cityGroup.SelectMany(c => c.Orders).Average(order => order.Total) : 0) : 0,
                     averageIntensity: cityGroup.Sum(c => c.Orders.Count())
                 ));
 
