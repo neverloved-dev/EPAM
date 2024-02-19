@@ -25,20 +25,19 @@ public class ProductController : Controller
 
     public IActionResult New()
     {
+        ViewBag.Categories = ReturnCategoryViewBag();
+        return View(new Product());
+    }
+
+    private SelectList ReturnCategoryViewBag()
+    {
         List<Category> categories = _context.Categories.ToList();
         List<int> categoryIds = new List<int>();
         for (int i = 0; i < categories.Count; i++)
         {
             categoryIds.Add(categories[i].CategoryID);
         }
-        ViewBag.Categories = new SelectList(categoryIds);
-        return View(new Product());
-    }
-
-    private IEnumerable<SelectListItem>? GetCategoriesSelectList(int selectedCategory = 0)
-    {
-        List<Category> categories = _context.Categories.ToList();
-        return categories as IEnumerable<SelectListItem>;
+        return new SelectList(categoryIds);
     }
     
     [HttpPost]
@@ -51,7 +50,7 @@ public class ProductController : Controller
             return RedirectToAction("ListAll");
         }
 
-        ViewBag.Categories = GetCategoriesSelectList();
+        ViewBag.Categories = ReturnCategoryViewBag();
         return View(product);
     }
     
@@ -65,7 +64,7 @@ public class ProductController : Controller
             return NotFound();
         }
 
-        ViewBag.Categories = GetCategoriesSelectList(product.CategoryID);
+        ViewBag.Categories = ReturnCategoryViewBag();
         return View(product);
     }
     
@@ -79,7 +78,7 @@ public class ProductController : Controller
             return RedirectToAction("ListAll");
         }
 
-        ViewBag.Categories = GetCategoriesSelectList(product.CategoryID);
+        ViewBag.Categories = ReturnCategoryViewBag();
         return View(product);
     }
 

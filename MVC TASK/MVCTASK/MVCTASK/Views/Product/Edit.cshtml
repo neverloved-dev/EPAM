@@ -17,7 +17,7 @@
     </div>
     <div>
         @Html.LabelFor(model => model.CategoryID)
-        @Html.DropDownListFor(model => model.CategoryID, (SelectList)ViewBag.Categories, "Select Category")
+        @Html.DropDownList("Category", ViewBag.Categories, "Select Category",new{@class="form-control"})
         @Html.ValidationMessageFor(model => model.CategoryID)
     </div>
     <input type="submit" value="Save" />
