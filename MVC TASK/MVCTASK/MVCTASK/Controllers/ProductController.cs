@@ -17,29 +17,28 @@ public class ProductController : Controller
     // GET
     public IActionResult ListAll()
     {
-        int productCount = _configuration.GetValue<int>("MaxProductCount");
+        var productCount = _configuration.GetValue<int>("MaxProductCount");
         List<Product> products;
-        if (productCount > 0)
-        {
-          products =  _context.Products.Take(productCount).ToList();   
-        }
-        else
-        {
-            products = _context.Products.ToList();
-        }
+        products = productCount > 0 ? _context.Products.Take(productCount).ToList() : _context.Products.ToList();
         return View(products);
     }
 
     public IActionResult New()
     {
-        ViewBag.Categories = GetCategoriesSelectList();
+        List<Category> categories = _context.Categories.ToList();
+        List<int> categoryIds = new List<int>();
+        for (int i = 0; i < categories.Count; i++)
+        {
+            categoryIds.Add(categories[i].CategoryID);
+        }
+        ViewBag.Categories = new SelectList(categoryIds);
         return View(new Product());
     }
 
-    private SelectList GetCategoriesSelectList(int selectedCategory = 0)
+    private IEnumerable<SelectListItem>? GetCategoriesSelectList(int selectedCategory = 0)
     {
         List<Category> categories = _context.Categories.ToList();
-        return new SelectList(categories, "Id", "Name", selectedCategory);
+        return categories as IEnumerable<SelectListItem>;
     }
     
     [HttpPost]

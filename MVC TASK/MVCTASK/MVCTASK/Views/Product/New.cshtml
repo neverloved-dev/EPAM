@@ -1,4 +1,5 @@
-﻿@model Product
+﻿@using System.Formats.Asn1
+@model Product
 
 @using (Html.BeginForm("New", "Product", FormMethod.Post))
 {
@@ -16,7 +17,7 @@
     </div>
     <div>
         @Html.LabelFor(model => model.CategoryID)
-        @Html.DropDownListFor(model => model.CategoryID, (SelectList)ViewBag.Categories, "Select Category") // convert each category to select list item and return a list of those
+        @Html.DropDownList("Category", ViewBag.Categories, "Select Category",new {@class="form-control"})
         @Html.ValidationMessageFor(model => model.CategoryID)
     </div>
     <input type="submit" value="Create" />
