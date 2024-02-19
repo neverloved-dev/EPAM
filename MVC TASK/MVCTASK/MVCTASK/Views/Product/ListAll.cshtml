@@ -8,24 +8,25 @@
     <div class="list-group text-center">
         <table class="table">
             <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Category ID</th>
-                </tr>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Category ID</th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var product in Model)
-                {
-                    <tr>
-                        <td>@product.ProductID</td>
-                        <td>@product.ProductName</td>
-                        <td>@product.UnitPrice</td>
-                        <td>@product.CategoryID</td>
-                    </tr>
-                }
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.ProductID</td>
+                    <td>@product.ProductName</td>
+                    <td>@product.UnitPrice</td>
+                    <td>@product.CategoryID</td>
+                </tr>
+            }
             </tbody>
         </table>
+        
     </div>
 </div>

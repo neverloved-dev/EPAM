@@ -1,24 +1,41 @@
 using EFCore_Class_Library.Repository;
 using EFCore_Class_Library.Models;
+using Microsoft.EntityFrameworkCore;
+using EFCore_Class_Library.Context;
 
 namespace EFCore_Tests
 {
-    public class UnitTest1
+    public class EFCoreTests
     {
         private ProductRepository productRepository = new ProductRepository();
         private OrderRepository orderRepository = new OrderRepository();
         // constructor with an in memory database and then delete everything after the tests are over
+        public EFCoreTests()
+        {
+            var options = new DbContextOptionsBuilder<EfCoreDbContext>()
+                .UseInMemoryDatabase(databaseName: "InMemoryDatabase")
+                .Options;
+        }
 
+        public void Dispose()
+        {
+            using (var context = new EfCoreDbContext())
+            {
+                context.Database.EnsureDeleted();
+            }
+        }
         [Fact]
         public void ProductSingleUpdate()
         {
             //Arrange
-            Product productToUpdate = productRepository.GetSingle(1);
-            productToUpdate.Name = "Updated Name";
+            Product product = new Product(5, "Fan", "Just a fan", 2.0, 1.0, 3.0, 4.0);
+            productRepository.Create(product);
+            var productToUpdate = productRepository.GetSingle(5);
             //Act
+            productToUpdate.Name = "Updated name";
             productRepository.Update(productToUpdate);
             //Assert
-            Product result = productRepository.GetSingle(1);
+            Product result = productRepository.GetSingle(5);
             Assert.Equal(result, productToUpdate);
         }
 
@@ -26,11 +43,13 @@ namespace EFCore_Tests
         public void ProductSingleDelete()
         {
             //Arrange
-            Product product = productRepository.GetSingle(1);
+            Product product = new Product(4, "Fan", "Just a fan", 2.0, 1.0, 3.0, 4.0);
+            productRepository.Create(product);
+            Product retrievedProduct = productRepository.GetSingle(4);
             //Act
-            productRepository.Delete(product.Id);
+            productRepository.Delete(retrievedProduct.Id);
             //Assert
-            Assert.Null(productRepository.GetSingle(1));
+            Assert.Null(productRepository.GetSingle(4));
         }
         [Fact]
         public void ProductSingleCreate()
@@ -80,13 +99,15 @@ namespace EFCore_Tests
         public void OrderUpdate()
         {
             //Arrange
-            Order order = orderRepository.GetSingle(1);
+            Order order = new Order(3, Status.NOT_STARTED, DateTime.Now, DateTime.Now, 1);
+            orderRepository.Create(order);
             //Act
-            order.Status = Status.LOADING;
-            orderRepository.Update(order);
+            Order orderToUpdate = orderRepository.GetSingle(3);
+            orderToUpdate.Status = Status.LOADING;
+            orderRepository.Update(orderToUpdate);
             //Assert
-            Order result = orderRepository.GetSingle(1);
-            Assert.Equal(order.Status, result.Status);
+            Order result = orderRepository.GetSingle(3);
+            Assert.Equal(Status.LOADING, result.Status);
 
         }
 
@@ -94,7 +115,7 @@ namespace EFCore_Tests
         public void OrderFilterDelete()
         {
             // Arrange
-            Order order = new Order(1, Status.NOT_STARTED, DateTime.Now, DateTime.Now, 1);
+            Order order = new Order(2, Status.NOT_STARTED, DateTime.Now, DateTime.Now, 1);
             orderRepository.Create(order);
             //Act
             List<Order> orders = orderRepository.OrderFilterByStatus(Status.NOT_STARTED);

@@ -24,7 +24,11 @@ namespace EFCore_Class_Library.Repository
 
         public Product GetSingle(int value)
         {
-            var result =  _dbContext.Products.Where(p => p.Id == value).ToList();
+            var result =  _dbContext.Products?.Where(p => p.Id == value).ToList();
+            if (result.Count == 0)
+            {
+                return null;
+            }
             return result.Single();
         }
 
