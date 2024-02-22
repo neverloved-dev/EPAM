@@ -23,6 +23,7 @@
                     <td>@product.ProductName</td>
                     <td>@product.UnitPrice</td>
                     <td>@product.CategoryID</td>
+                    <td><button type="button" onclick="location.href='@Url.Action("Edit","Product",new {id = product.ProductID})'">Edit</button></td>
                 </tr>
             }
             </tbody>
