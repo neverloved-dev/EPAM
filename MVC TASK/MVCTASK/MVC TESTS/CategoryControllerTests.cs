@@ -12,17 +12,6 @@ namespace MVC_TESTS
 
     public class CategoryControllerTests
     {
-        private readonly ILogger<CategoryController> _logger;
-        private DataContext _context = new DataContext(options=>options.UseInMemoryDatabase("InMemoryDb"));
-        public CategoryControllerTests() 
-        {
-            CategoryController categoryController = new CategoryController(_logger,_context);
-        }
 
-        [Fact]
-        public void CategoryControllerGetCategoriesShouldReturnOkResult()
-        {
-
-        }
     }
 }
