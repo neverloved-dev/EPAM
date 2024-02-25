@@ -7,7 +7,7 @@ using MVCTASK.Models;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace MVCTASK.Tests
+namespace MVC_TESTS
 {
     public class ProductControllerIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
     {
@@ -85,7 +85,7 @@ namespace MVCTASK.Tests
             var json = JsonConvert.SerializeObject(existingProduct);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("/Product/Edit/1", content);
+            var response = await client.PostAsync("Product/Edit/1", content);
 
             response.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
