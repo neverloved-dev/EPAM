@@ -47,6 +47,7 @@ public class ProductController : Controller
         if (ModelState.IsValid)
         {
             _context.Products.Add(product);
+            _context.SaveChangesAsync();
             return RedirectToAction("ListAll");
         }
 

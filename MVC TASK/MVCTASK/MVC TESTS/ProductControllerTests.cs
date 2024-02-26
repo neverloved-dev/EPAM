@@ -59,7 +59,10 @@ namespace MVC_TESTS
 
             var product = new Product
             {
-                // Provide valid properties for the new product
+                ProductID = 12,
+                ProductName = "some Name",
+                UnitPrice = Decimal.One,
+                CategoryID = 5
             };
 
             var json = JsonConvert.SerializeObject(product);
@@ -79,7 +82,11 @@ namespace MVC_TESTS
             // Assuming there is a product with ID 1 for testing purposes
             var existingProduct = new Product
             {
-                // Provide valid properties for the existing product
+                ProductID = 1,
+                ProductName = "some Name",
+                UnitPrice = Decimal.One,
+                CategoryID = 5
+            
             };
 
             var json = JsonConvert.SerializeObject(existingProduct);
