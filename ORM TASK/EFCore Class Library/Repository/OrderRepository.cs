@@ -9,7 +9,13 @@ namespace EFCore_Class_Library.Repository
 {
     public class OrderRepository : IGenericRepository<Order>
     {
-        private EfCoreDbContext _dbContext = new EfCoreDbContext();
+        private EfCoreDbContext _dbContext;
+
+        public OrderRepository(EfCoreDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public void Delete(int id)
         {
             Order orderToDelete = _dbContext.Find<Order>(id);

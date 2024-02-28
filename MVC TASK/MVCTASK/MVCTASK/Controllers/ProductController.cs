@@ -42,12 +42,12 @@ public class ProductController : Controller
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult New(Product product)
+    public async Task<IActionResult> New(Product product)
     {
         if (ModelState.IsValid)
         {
             _context.Products.Add(product);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
             return RedirectToAction("ListAll");
         }
 

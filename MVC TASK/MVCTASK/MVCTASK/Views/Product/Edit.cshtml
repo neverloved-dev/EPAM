@@ -4,7 +4,6 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-    @Html.HiddenFor(model => model.ProductID)
     <div>
         @Html.LabelFor(model => model.ProductName)
         @Html.TextBoxFor(model => model.ProductName)

@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using MVCTASK.Models;
 using Newtonsoft.Json;
@@ -53,25 +54,22 @@ namespace MVC_TESTS
         }
 
         [Fact]
-        public async Task New_Post_ReturnsSuccessStatusCode()
+    public async Task New_Post_ReturnsSuccessStatusCode()
         {
             var client = _factory.CreateClient();
 
-            var product = new Product
-            {
-                ProductID = 12,
-                ProductName = "some Name",
-                UnitPrice = Decimal.One,
-                CategoryID = 5
-            };
+            var formData = new MultipartFormDataContent
+        {
 
-            var json = JsonConvert.SerializeObject(product);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            { new StringContent("some Name"), "ProductName" },
+            { new StringContent("1"), "UnitPrice" },
+            { new StringContent("5"), "Category" }
+        };
 
-            var response = await client.PostAsync("/Product/New", content);
+            var response = await client.PostAsync("/Product/New", formData);
 
             response.EnsureSuccessStatusCode();
-            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
+            Assert.Equal(StatusCodes.Status200OK.ToString(),response.StatusCode.ToString());
         }
 
         [Fact]
@@ -82,20 +80,22 @@ namespace MVC_TESTS
             // Assuming there is a product with ID 1 for testing purposes
             var existingProduct = new Product
             {
-                ProductID = 1,
                 ProductName = "some Name",
                 UnitPrice = Decimal.One,
                 CategoryID = 5
-            
             };
 
-            var json = JsonConvert.SerializeObject(existingProduct);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var formData = new MultipartFormDataContent
+        {
+            { new StringContent(existingProduct.ProductName), "ProductName" },
+            { new StringContent(existingProduct.UnitPrice.ToString()), "UnitPrice" },
+            { new StringContent(existingProduct.CategoryID.ToString()), "Category" }
+        };
 
-            var response = await client.PostAsync("Product/Edit/1", content);
+            var response = await client.PostAsync("Product/Edit/1", formData);
 
             response.EnsureSuccessStatusCode();
-            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
+            Assert.Equal(StatusCodes.Status302Found, (int)response.StatusCode);
         }
     }
 }

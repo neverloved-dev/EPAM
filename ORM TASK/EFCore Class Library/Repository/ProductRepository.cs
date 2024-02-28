@@ -9,7 +9,12 @@ namespace EFCore_Class_Library.Repository
 {
     public class ProductRepository : IGenericRepository<Product>
     {
-        private EfCoreDbContext _dbContext = new EfCoreDbContext();
+        private EfCoreDbContext _dbContext;
+
+        public ProductRepository(EfCoreDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
         public void Delete(int id)
         {
             Product productToDelete = _dbContext.Find<Product>(id);

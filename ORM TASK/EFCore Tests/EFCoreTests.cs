@@ -7,14 +7,17 @@ namespace EFCore_Tests
 {
     public class EFCoreTests
     {
-        private ProductRepository productRepository = new ProductRepository();
-        private OrderRepository orderRepository = new OrderRepository();
+        private ProductRepository productRepository;
+        private OrderRepository orderRepository;
         // constructor with an in memory database and then delete everything after the tests are over
         public EFCoreTests()
         {
             var options = new DbContextOptionsBuilder<EfCoreDbContext>()
                 .UseInMemoryDatabase(databaseName: "InMemoryDatabase")
                 .Options;
+            EfCoreDbContext context = new EfCoreDbContext();
+            productRepository = new ProductRepository(context);
+            orderRepository = new OrderRepository(context);
         }
 
         public void Dispose()
@@ -67,10 +70,18 @@ namespace EFCore_Tests
         public void ProductGetAll()
         {
             //Arrange
+            productRepository.Create(new Product(1, "Product 1", "Description 1", 5.0, 10.0, 5.0, 15.0));
+            productRepository.Create(new Product(2, "Product 2", "Description 2", 8.0, 12.0, 6.0, 18.0));
+            productRepository.Create(new Product(7, "Product 3", "Description 3", 6.0, 8.0, 4.0, 12.0));
             //Act
             List<Product> productList = productRepository.GetAll();
             //Assert
-            Assert.NotNull(productList);
+            Assert.Equal(5.0, productList[0].Weight);
+            Assert.Equal(15.0 , productList[0].Length);
+            Assert.Equal(8.0, productList[1].Weight);
+            Assert.Equal(18.0, productList[1].Length);
+            Assert.Equal(6.0, productList[2].Weight);
+            Assert.Equal(12.0, productList[2].Length);
         }
 
         [Fact]
