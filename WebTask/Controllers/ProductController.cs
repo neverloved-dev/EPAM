@@ -24,7 +24,7 @@ namespace WebTask.Controllers
         {
             return Ok(_productService.Get(id));
         }
-        [HttpGet]
+        [HttpGet("/paginated")]
         public IActionResult GetProductsPaginated(int page, int pageSize,int categoryId)
         {
             return Ok(_productService.GetProductsPaginated(page,pageSize, categoryId));
