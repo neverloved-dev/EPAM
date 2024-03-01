@@ -2,6 +2,12 @@ namespace WebTaskTests
 {
     public class CategoryControllerTests
     {
+
+        public CategoryControllerTests()
+        {
+
+        }
+
         [Fact]
         public void GetCategoriesReturns200WithListOfCategories()
         {
@@ -30,6 +36,7 @@ namespace WebTaskTests
         public void DeletesSingleCategoryWith200Response()
         {
 
-        
+
+        }
     }
 }
