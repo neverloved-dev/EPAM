@@ -37,25 +37,25 @@ namespace WebTaskTests
         [InlineData(1,10,0)]
         public void GetProductsPaginatedReturnsPaginatedProducts(int page,int pageSize,int categoryId)
         {
-
+            throw new NotImplementedException();
         }
 
         [Fact]
         public void UpdatesProductWith200ResponseAndReturnsIt()
         {
-
+            throw new NotImplementedException();
         }
 
         [Fact]
         public void PostProductWith200ResponseAndReturnsIt()
         {
-
+            throw new NotImplementedException();
         }
 
         [Fact]
         public void DeleteProductWith200Response()
         {
-
+            throw new NotImplementedException();
         }
     }
     
