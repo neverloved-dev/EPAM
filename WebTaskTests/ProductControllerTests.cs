@@ -8,9 +8,10 @@ namespace WebTaskTests
 {
     public class ProductControllerTests
     {
+        private static HttpClient _httpClient;
         public ProductControllerTests() 
         {
-
+            _httpClient = new HttpClient("localhost:");
         }
 
         [Fact]
