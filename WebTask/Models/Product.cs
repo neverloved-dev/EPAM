@@ -12,4 +12,15 @@ public class Product
     public decimal Price { get; set; }
     [Required(ErrorMessage = "You must select a category")]
     public int CategoryId { get; set; }
+
+    public Product()
+    {
+
+    }
+    public Product(string name, decimal price, int categoryId)
+    {
+        Name = name;
+        Price = price;
+        CategoryId = categoryId;
+    }
 }

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using WebTask.Models;
+using Newtonsoft.Json;
 
 namespace WebTaskTests
 {
@@ -41,9 +43,15 @@ namespace WebTaskTests
         }
 
         [Fact]
-        public void UpdatesProductWith200ResponseAndReturnsIt()
+        public async Task UpdatesProductWith200ResponseAndReturnsIt()
         {
-            throw new NotImplementedException();
+            //Arrange
+            var product = new Product("Product1", Decimal.Parse("12.0"), 5);
+            var packageToSend = new StringContent(JsonConvert.SerializeObject(product),Encoding.UTF8,"application/json");
+            //Act
+            var response =await  _httpClient.PutAsync("/api/products",packageToSend);
+            // Assert
+            response.EnsureSuccessStatusCode();
         }
 
         [Fact]
