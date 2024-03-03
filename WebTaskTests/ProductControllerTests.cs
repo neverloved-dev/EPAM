@@ -55,15 +55,25 @@ namespace WebTaskTests
         }
 
         [Fact]
-        public void PostProductWith200ResponseAndReturnsIt()
+        public async Task PostProductWith200ResponseAndReturnsIt()
         {
-            throw new NotImplementedException();
+            //Arrange
+            var product = new Product("Product3", Decimal.Parse("14.0"), 2);
+            var packageToSend = new StringContent(JsonConvert.SerializeObject(product), Encoding.UTF8, "application/json");
+            //Act
+            var response = await _httpClient.PostAsync("/api/products", packageToSend);
+            // Assert
+            response.EnsureSuccessStatusCode();
         }
 
-        [Fact]
-        public void DeleteProductWith200Response()
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        public async Task DeleteProductWith200Response(int productId)
         {
-            throw new NotImplementedException();
+            //Arrange
+            var responseToGetProduct = _httpClient.GetAsync($"/api/products/{productId}");
+            var contentFromGet = await responseToGetProduct.Content.ReadAsStringAsync();
         }
     }
     
