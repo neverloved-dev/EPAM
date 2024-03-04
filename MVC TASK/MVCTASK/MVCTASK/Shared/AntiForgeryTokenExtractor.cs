@@ -34,7 +34,14 @@ namespace MVCTASK.Shared
             throw new ArgumentException($"Anti forgery token '{AntiForgeryFieldName}' not found in HTML", nameof(htmlBody));
         }
 
-        // 
+        // extract both the cookie and the token ( return results of previous two methods )
+        public static async Task<(string fieldValue, string cookieValue)> ExtractAntiForgeryValues(HttpResponseMessage response)
+        {
+            var cookie = ExtractAntiForgeryCookieValue(response);
+            var token = ExtractAntiForgeryToken(await response.Content.ReadAsStringAsync());
+
+            return (fieldValue: token, cookieValue: cookie);
+        }
     }
     
 }
