@@ -40,7 +40,6 @@ namespace EFCore_Tests
             //Assert
             Product result = productRepository.GetSingle(5);
             Assert.Equal(result, productToUpdate);
-            Dispose();
         }
 
         [Fact]
@@ -54,7 +53,6 @@ namespace EFCore_Tests
             productRepository.Delete(retrievedProduct.Id);
             //Assert
             Assert.Null(productRepository.GetSingle(4));
-            Dispose();
         }
         [Fact]
         public void ProductSingleCreate()
@@ -66,7 +64,6 @@ namespace EFCore_Tests
             //Assert
             Product resultProduct = productRepository.GetSingle(3);
             Assert.Equal(resultProduct.Id, product.Id);
-            Dispose();
         }
 
         [Fact]
@@ -85,7 +82,6 @@ namespace EFCore_Tests
             Assert.Equal(18.0, productList[1].Length);
             Assert.Equal(6.0, productList[2].Weight);
             Assert.Equal(12.0, productList[2].Length);
-            Dispose();
         }
 
         [Fact]
@@ -98,7 +94,6 @@ namespace EFCore_Tests
             //Assert
             Order result = orderRepository.GetSingle(1);
             Assert.NotNull(result);
-            Dispose();
         }
         [Fact]
         public void OrderDelete()
@@ -112,7 +107,6 @@ namespace EFCore_Tests
             //Assert
             Order result = orderRepository.GetSingle(1);
             Assert.Null(result);
-            Dispose();
         }
         [Fact]
         public void OrderUpdate()
@@ -127,7 +121,6 @@ namespace EFCore_Tests
             //Assert
             Order result = orderRepository.GetSingle(3);
             Assert.Equal(Status.LOADING, result.Status);
-            Dispose();
         }
 
         [Fact]
@@ -140,7 +133,6 @@ namespace EFCore_Tests
             List<Order> orders = orderRepository.OrderFilterByStatus(Status.NOT_STARTED);
             //Assert
             Assert.NotEmpty(orders);
-            Dispose();
         }
     }
 }
