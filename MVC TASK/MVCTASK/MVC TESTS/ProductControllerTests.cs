@@ -1,10 +1,13 @@
 using System.Net;
 using System.Net.Http;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Net.Http.Headers;
 using MVCTASK.Models;
+using MVCTASK.Shared;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -57,26 +60,30 @@ namespace MVC_TESTS
     public async Task New_Post_ReturnsSuccessStatusCode()
         {
             var client = _factory.CreateClient();
+            var initResponse = await client.GetAsync("/Product/New");
+            var antiForgeryValues = await AntiForgeryTokenExtractor.ExtractAntiForgeryValues(initResponse);
 
-            var formData = new MultipartFormDataContent
-        {
-
-            { new StringContent("some Name"), "ProductName" },
-            { new StringContent("1"), "UnitPrice" },
-            { new StringContent("5"), "Category" }
-        };
-
-            var response = await client.PostAsync("/Product/New", formData);
-
+                var formModel = new MultipartFormDataContent
+                {
+                    { new StringContent("some Name"), "ProductName" },
+                    { new StringContent("1"), "UnitPrice" },
+                    { new StringContent("5"), "CategoryID" }
+                };
+            //creating post request with the cookie
+            var postRequest = new HttpRequestMessage(HttpMethod.Post, "/Product/New");
+            postRequest.Headers.Add("Cookie",new CookieHeaderValue(AntiForgeryTokenExtractor.AntiForgeryCookieName, antiForgeryValues.cookieValue).ToString());
+            postRequest.Content = formModel;
+            var response = await client.SendAsync(postRequest);
             response.EnsureSuccessStatusCode();
-            Assert.Equal(StatusCodes.Status200OK.ToString(),response.StatusCode.ToString());
+            Assert.Equal(HttpStatusCode.OK,response.StatusCode);
         }
 
         [Fact]
         public async Task Edit_Post_ReturnsSuccessStatusCode()
         {
             var client = _factory.CreateClient();
-
+            var initResponse = await client.GetAsync("/Product/Edit/1");
+            var antiForgeryValues = await AntiForgeryTokenExtractor.ExtractAntiForgeryValues(initResponse);
             // Assuming there is a product with ID 1 for testing purposes
             var existingProduct = new Product
             {
@@ -92,10 +99,13 @@ namespace MVC_TESTS
             { new StringContent(existingProduct.CategoryID.ToString()), "Category" }
         };
 
-            var response = await client.PostAsync("Product/Edit/1", formData);
+            var putRequest = new HttpRequestMessage(HttpMethod.Put, "/Product/Edit/1");
+            putRequest.Headers.Add("Cookie", new CookieHeaderValue(AntiForgeryTokenExtractor.AntiForgeryCookieName, antiForgeryValues.cookieValue).ToString());
+            putRequest.Content = formData;
+            var response = await client.SendAsync(putRequest);
 
             response.EnsureSuccessStatusCode();
-            Assert.Equal(StatusCodes.Status302Found, (int)response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }
 }
