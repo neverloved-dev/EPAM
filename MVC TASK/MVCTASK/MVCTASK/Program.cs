@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MVCTASK.Models;
-
+using MVCTASK.Shared;
 public class Program
 {
     public static async Task Main(string[] args)
@@ -12,6 +12,11 @@ public class Program
         builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(
             builder.Configuration.GetConnectionString(
                 "Main")));
+        builder.Services.AddAntiforgery(t =>
+        {
+            t.Cookie.Name = AntiForgeryTokenExtractor.AntiForgeryCookieName;
+            t.FormFieldName = AntiForgeryTokenExtractor.AntiForgeryFieldName;
+        });
 
         var app = builder.Build();
 
