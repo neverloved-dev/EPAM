@@ -1,21 +1,22 @@
 using Azure;
+using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
 
 namespace WebTaskTests
 {
-    public class CategoryControllerTests
+    public class CategoryControllerTests:IClassFixture<WebApplicationFactory<Program>>
     {
-        private static HttpClient _httpClient;
-        public CategoryControllerTests()
+        private readonly WebApplicationFactory<Program> _applicationFactory;
+        public CategoryControllerTests(WebApplicationFactory<Program> applicationFactory)
         {
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("http://localhost:7910");
+            _applicationFactory = applicationFactory;
         }
 
         [Fact]
         public async Task GetCategoriesReturns200WithListOfCategories()
         {
-            var response = await _httpClient.GetAsync("/api/categories");
+           var client = _applicationFactory.CreateClient();
+            var response = await client.GetAsync("/api/products");
             response.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
@@ -35,9 +36,13 @@ namespace WebTaskTests
         [Theory]
         [InlineData(1)]
         [InlineData(2)]
-        public void ReturnsSingleCategoryWith200Response(int categoryId)
+        public async Task ReturnsSingleCategoryWith200Response(int categoryId)
         {
-            throw new NotImplementedException();
+            var client = _applicationFactory.CreateClient();
+            var response = await client.GetAsync($"/api/products/{categoryId}");
+            response.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
         }
 
         [Fact]

@@ -1,8 +1,11 @@
-﻿namespace WebTask.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebTask.Models;
 
 public class Category
 {
-    public int Id { get; private set; }
-    public string Name { get; set; }
-    public string Supplier { get; set; }
+    [Key]
+    public int CategoryID { get;  set; }
+    public string CategoryName { get; set; }
+    public string Description { get; set; }
 }

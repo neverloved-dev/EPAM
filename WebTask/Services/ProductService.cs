@@ -32,9 +32,9 @@ public class ProductService:IGenericService<Product>
     public void Update(Product entity,int id)
     {
        var productToUpdate = _context.Products.Find(id);
-        productToUpdate.Name = entity.Name;
-        productToUpdate.Price = entity.Price;
-        productToUpdate.CategoryId = entity.CategoryId;
+        productToUpdate.ProductName = entity.ProductName;
+        productToUpdate.UnitPrice = entity.UnitPrice;
+        productToUpdate.CategoryID = entity.CategoryID;
         _context.SaveChanges();
     }
 
@@ -54,7 +54,7 @@ public class ProductService:IGenericService<Product>
 
         if (categoryId != 0)
         {
-            query = query.Where(p => p.CategoryId == categoryId);
+            query = query.Where(p => p.CategoryID == categoryId);
         }
 
         int skipAmount = page * pageSize;

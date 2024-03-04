@@ -6,23 +6,23 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using WebTask.Models;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace WebTaskTests
 {
-    public class ProductControllerTests
+    public class ProductControllerTests:IClassFixture<WebApplicationFactory<Program>>
     {
-        private static HttpClient _httpClient;
-        public ProductControllerTests() 
-        {
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("http://localhost:7910");
+        private readonly WebApplicationFactory<Program> _applicationFactory;
+        public ProductControllerTests(WebApplicationFactory<Program> applicationFactory)
+        { 
+            _applicationFactory = applicationFactory;
         }
 
         [Fact]
         public async Task GetAllProductsReturns200WithListOfProducts()
         {
-           var response = await _httpClient.GetAsync("/api/products");
+            var client = _applicationFactory.CreateClient();
+           var response = await client.GetAsync("/api/products");
            response.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
@@ -31,7 +31,8 @@ namespace WebTaskTests
         [InlineData(3)]
         public async void GetSingleProductsReturnsSingleProduct(int productId)
         {
-            var response = await _httpClient.GetAsync($"/api/products/{productId}");
+            var client = _applicationFactory.CreateClient();
+            var response = await client.GetAsync($"/api/products/{productId}");
             response.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
@@ -45,25 +46,13 @@ namespace WebTaskTests
         [Fact]
         public async Task UpdatesProductWith200ResponseAndReturnsIt()
         {
-            //Arrange
-            var product = new Product("Product1", Decimal.Parse("12.0"), 5);
-            var packageToSend = new StringContent(JsonConvert.SerializeObject(product),Encoding.UTF8,"application/json");
-            //Act
-            var response =await  _httpClient.PutAsync("/api/products",packageToSend);
-            // Assert
-            response.EnsureSuccessStatusCode();
+            throw new NotImplementedException();
         }
 
         [Fact]
         public async Task PostProductWith200ResponseAndReturnsIt()
         {
-            //Arrange
-            var product = new Product("Product3", Decimal.Parse("14.0"), 2);
-            var packageToSend = new StringContent(JsonConvert.SerializeObject(product), Encoding.UTF8, "application/json");
-            //Act
-            var response = await _httpClient.PostAsync("/api/products", packageToSend);
-            // Assert
-            response.EnsureSuccessStatusCode();
+            throw new NotImplementedException();
         }
 
         [Theory]
@@ -71,9 +60,7 @@ namespace WebTaskTests
         [InlineData(2)]
         public async Task DeleteProductWith200Response(int productId)
         {
-            //Arrange
-            var responseToGetProduct = _httpClient.GetAsync($"/api/products/{productId}");
-            var contentFromGet = await responseToGetProduct.Content.ReadAsStringAsync();
+            throw new NotImplementedException();
         }
     }
     

@@ -30,8 +30,8 @@ public class CategoryService:IGenericService<Category>
     public void Update(Category entity,int id)
     {
         var categoryToUpdate = _context.Categories.Find(id);
-        categoryToUpdate.Supplier = entity.Supplier;
-        categoryToUpdate.Name = entity.Name;
+        categoryToUpdate.Description = entity.Description;
+        categoryToUpdate.CategoryName = entity.CategoryName;
         _context.SaveChanges();
     }
 
