@@ -63,12 +63,12 @@ namespace MVC_TESTS
             var initResponse = await client.GetAsync("/Product/New");
             var antiForgeryValues = await AntiForgeryTokenExtractor.ExtractAntiForgeryValues(initResponse);
 
-            var formModel = new FormUrlEncodedContent(new[]
+                var formModel = new MultipartFormDataContent
                 {
-                    new KeyValuePair<string, string>("ProductName", "some Name"),
-                    new KeyValuePair<string, string>("UnitPrice", "1"),
-                    new KeyValuePair<string, string>("CategoryID", "5"),
-                });
+                    { new StringContent("some Name"), "ProductName" },
+                    { new StringContent("1"), "UnitPrice" },
+                    { new StringContent("5"), "CategoryID" }
+                };
             //creating post request with the cookie
             var postRequest = new HttpRequestMessage(HttpMethod.Post, "/Product/New");
             postRequest.Headers.Add("Cookie",new CookieHeaderValue(AntiForgeryTokenExtractor.AntiForgeryCookieName, antiForgeryValues.cookieValue).ToString());
