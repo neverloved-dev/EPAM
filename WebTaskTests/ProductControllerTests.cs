@@ -38,6 +38,7 @@ namespace WebTaskTests
         }
         [Theory]
         [InlineData(1,10,0)]
+        [InlineData(2,20,4)]
         public void GetProductsPaginatedReturnsPaginatedProducts(int page,int pageSize,int categoryId)
         {
             throw new NotImplementedException();
@@ -60,7 +61,10 @@ namespace WebTaskTests
         [InlineData(2)]
         public async Task DeleteProductWith200Response(int productId)
         {
-            throw new NotImplementedException();
+            var client = _applicationFactory.CreateClient();
+            var response = await client.DeleteAsync($"/api/products/{productId}");
+            response.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }
     

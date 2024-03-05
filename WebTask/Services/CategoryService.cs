@@ -23,6 +23,11 @@ public class CategoryService:IGenericService<Category>
         {
             throw new NullReferenceException("The object could not be found");
         }
+        var productList = _context.Products.Where(x=>x.CategoryID == id).ToList();
+        foreach (var product in productList)
+        {
+            _context.Products.Remove(product);
+        }
         _context.Categories.Remove(categoryToDelete);
         _context.SaveChanges();
     }

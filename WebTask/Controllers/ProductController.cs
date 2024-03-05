@@ -42,7 +42,7 @@ namespace WebTask.Controllers
             _productService.Add(product);
             return Ok();
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             _productService.Delete(id);
