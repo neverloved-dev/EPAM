@@ -29,7 +29,7 @@ namespace WebTaskTests
         [Theory]
         [InlineData(1)]
         [InlineData(3)]
-        public async void GetSingleProductsReturnsSingleProduct(int productId)
+        public async Task GetSingleProductsReturnsSingleProduct(int productId)
         {
             var client = _applicationFactory.CreateClient();
             var response = await client.GetAsync($"/api/products/{productId}");
@@ -39,9 +39,13 @@ namespace WebTaskTests
         [Theory]
         [InlineData(1,10,0)]
         [InlineData(2,20,4)]
-        public void GetProductsPaginatedReturnsPaginatedProducts(int page,int pageSize,int categoryId)
+        public async Task GetProductsPaginatedReturnsPaginatedProducts(int page,int pageSize,int categoryId)
         {
-            throw new NotImplementedException();
+            var client = _applicationFactory.CreateClient();
+            var response = await client.GetAsync($"/api/products/page={page}?pageSize={pageSize}?categoryId={categoryId}");
+            // check if the list returned matches the pageSize and that the categories match
+            response.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK,response.StatusCode);
         }
 
         [Fact]
