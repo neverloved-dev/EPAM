@@ -33,8 +33,8 @@ namespace WebTaskTests
             var categoryToUpdate = categoryToUpdateRequest.Result.Content.ReadAsStringAsync();
             // update the category fields
             var json = JsonConvert.SerializeObject(categoryToUpdate);
-            var content = new StringContent(json, Encoding.UTF8,, "application/json");
-            var response = await client.PutAsync("/api/categories/1");
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PutAsync("/api/categories/1",content);
             response.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }

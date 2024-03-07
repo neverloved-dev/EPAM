@@ -1,9 +1,11 @@
 ﻿using Azure;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WebTask.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -51,7 +53,18 @@ namespace WebTaskTests
         [Fact]
         public async Task UpdatesProductWith200ResponseAndReturnsIt()
         {
-            throw new NotImplementedException();
+            var client = _applicationFactory.CreateClient();
+            var resposne = await client.GetAsync($"/api/products/1");
+            var productToUpdateinJSON = await resposne.Content.ReadAsStringAsync();
+            var productToUpdate = JsonSerializer.Deserialize<Product>(productToUpdateinJSON,JsonSerializerOptions.Default);
+            productToUpdate.ProductName = "updated product name";
+            var jsonToSend = JsonSerializer.Serialize(productToUpdate);
+            var content = new StringContent(jsonToSend, Encoding.UTF8, "application/json");
+            var responseForUpdate = await client.PutAsync("/api/products/1", content);
+            responseForUpdate.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK,responseForUpdate.StatusCode);
+            var updatedProduct = JsonSerializer.Deserialize<Product>(await responseForUpdate.Content.ReadAsStringAsync(), JsonSerializerOptions.Default);
+            Assert.Equal("updated product name", updatedProduct.ProductName);
         }
 
         [Fact]
