@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 using WebTask.Models;
 
 namespace WebTaskTests
@@ -30,10 +31,10 @@ namespace WebTaskTests
             var client = _applicationFactory.CreateClient();
             var categoryToUpdateRequest = client.GetAsync("api/categories/1");
 
-            var categoryToUpdate = categoryToUpdateRequest.Result.Content.ReadAsStringAsync();
+            var categoryToUpdate = await categoryToUpdateRequest.Result.Content.ReadAsStringAsync();
             // update the category fields
             var json = JsonConvert.SerializeObject(categoryToUpdate);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var content = new StringContent(categoryToUpdate, Encoding.UTF8, "application/json");
             var response = await client.PutAsync("/api/categories/1",content);
             response.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -45,7 +46,7 @@ namespace WebTaskTests
             var client = _applicationFactory.CreateClient();
             var category = new Category
             {
-                CategoryID = 2,
+                //CategoryID = 2,
                 CategoryName = "Beverages",
                 Description = "Drinks"
                 
@@ -67,8 +68,9 @@ namespace WebTaskTests
             var client = _applicationFactory.CreateClient();
             var response = await client.GetAsync($"/api/categories/{categoryId}");
             response.EnsureSuccessStatusCode();
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-
+            var resultCategoryJson = await response.Content.ReadAsStringAsync();
+            var resultCategory = System.Text.Json.JsonSerializer.Deserialize<Category>(resultCategoryJson.ToString());
+            Assert.Equal(categoryId, resultCategory.CategoryID);
         }
 
         [Theory]

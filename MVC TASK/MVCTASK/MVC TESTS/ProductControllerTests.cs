@@ -67,7 +67,8 @@ namespace MVC_TESTS
                 {
                     { new StringContent("some Name"), "ProductName" },
                     { new StringContent("1"), "UnitPrice" },
-                    { new StringContent("5"), "CategoryID" }
+                    { new StringContent("5"), "CategoryID" },
+                    {new StringContent(antiForgeryValues.fieldValue),AntiForgeryTokenExtractor.AntiForgeryFieldName}
                 };
             //creating post request with the cookie
             var postRequest = new HttpRequestMessage(HttpMethod.Post, "/Product/New");
@@ -96,16 +97,20 @@ namespace MVC_TESTS
         {
             { new StringContent(existingProduct.ProductName), "ProductName" },
             { new StringContent(existingProduct.UnitPrice.ToString()), "UnitPrice" },
-            { new StringContent(existingProduct.CategoryID.ToString()), "Category" }
+            { new StringContent(existingProduct.CategoryID.ToString()), "Category" },
+            {new StringContent(antiForgeryValues.fieldValue),AntiForgeryTokenExtractor.AntiForgeryFieldName}
         };
 
-            var putRequest = new HttpRequestMessage(HttpMethod.Put, "/Product/Edit/1");
+            var putRequest = new HttpRequestMessage(HttpMethod.Post, "/Product/Edit/1");
             putRequest.Headers.Add("Cookie", new CookieHeaderValue(AntiForgeryTokenExtractor.AntiForgeryCookieName, antiForgeryValues.cookieValue).ToString());
             putRequest.Content = formData;
             var response = await client.SendAsync(putRequest);
 
             response.EnsureSuccessStatusCode();
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            // checking if the product was actually updated\
+            var finalGet = await client.GetAsync("/Product/1");
+            var stringRep = finalGet.Content.ReadAsStringAsync();
+            var newProduct = JsonSerializer.Deserialize<Product>(stringRep);
         }
     }
 }

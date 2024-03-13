@@ -36,7 +36,9 @@ namespace WebTaskTests
             var client = _applicationFactory.CreateClient();
             var response = await client.GetAsync($"/api/products/{productId}");
             response.EnsureSuccessStatusCode();
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var resultProductJson = await response.Content.ReadAsStringAsync();
+            var resultProduct = System.Text.Json.JsonSerializer.Deserialize<Product>(resultProductJson.ToString());
+            Assert.Equal(productId, resultProduct.ProductID);
         }
         [Theory]
         [InlineData(1,10,0)]
