@@ -46,10 +46,19 @@ namespace WebTaskTests
         public async Task GetProductsPaginatedReturnsPaginatedProducts(int page,int pageSize,int categoryId)
         {
             var client = _applicationFactory.CreateClient();
-            var response = await client.GetAsync($"/api/products/page={page}?pageSize={pageSize}?categoryId={categoryId}");
+            var response = await client.GetAsync($"/paginated?page={page}&pageSize={pageSize}&categoryId={categoryId}");
             // check if the list returned matches the pageSize and that the categories match
             response.EnsureSuccessStatusCode();
-            Assert.Equal(HttpStatusCode.OK,response.StatusCode);
+            var productsJson = await response.Content.ReadAsStringAsync();
+            var products = JsonSerializer.Deserialize<List<Product>>(productsJson.ToString());
+            Assert.True(pageSize>=products.Count);
+            if (categoryId != 0)
+            {
+                foreach (var product in products)
+                {
+                    Assert.Equal(categoryId, product.CategoryID);
+                }
+            }
         }
 
         [Fact]
