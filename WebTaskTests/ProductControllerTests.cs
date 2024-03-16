@@ -81,7 +81,19 @@ namespace WebTaskTests
         [Fact]
         public async Task PostProductWith200ResponseAndReturnsIt()
         {
-            throw new NotImplementedException();
+            var client = _applicationFactory.CreateClient();
+            var product = new Product
+            {
+                ProductName = "Our new product",
+                UnitPrice = Decimal.Parse("15.0"),
+                CategoryID = 3
+            }; 
+            var json = System.Text.Json.JsonSerializer.Serialize(product);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var resposne = await client.PostAsync("/api/products", content);
+            resposne.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK,resposne.StatusCode);
+
         }
 
         [Theory]

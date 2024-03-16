@@ -27,6 +27,7 @@ public class CategoryService:IGenericService<Category>
         foreach (var product in productList)
         {
             _context.Products.Remove(product);
+            _context.SaveChanges();
         }
         _context.Categories.Remove(categoryToDelete);
         _context.SaveChanges();
