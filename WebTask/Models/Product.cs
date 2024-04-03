@@ -4,7 +4,7 @@ namespace WebTask.Models;
 
 public class Product
 {
-    public int ProductID { get; private set; }
+    public int ProductID { get; set; }
     [Required(ErrorMessage = "Please enter a product name")]
     public string ProductName { get; set; }
     [Required(ErrorMessage = "Please enter a product price!")]
