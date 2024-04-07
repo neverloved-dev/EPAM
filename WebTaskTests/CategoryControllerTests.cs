@@ -30,14 +30,18 @@ namespace WebTaskTests
         {
             var client = _applicationFactory.CreateClient();
             var categoryToUpdateRequest = client.GetAsync("api/categories/1");
-
             var categoryToUpdate = await categoryToUpdateRequest.Result.Content.ReadAsStringAsync();
-            // update the category fields
-            var json = JsonConvert.SerializeObject(categoryToUpdate);
-            var content = new StringContent(categoryToUpdate, Encoding.UTF8, "application/json");
+            var category = System.Text.Json.JsonSerializer.Deserialize<Category>(categoryToUpdate);
+            category.CategoryName = "Updated";
+            var json = JsonConvert.SerializeObject(category);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.PutAsync("/api/categories/1",content);
             response.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+           var updatedCategoryRequest = client.GetAsync("api/categories/1");
+           var updatedCategoryString = await categoryToUpdateRequest.Result.Content.ReadAsStringAsync();
+           var updatedCategoryObject = System.Text.Json.JsonSerializer.Deserialize<Category>(updatedCategoryString);
+            Assert.Equal("Updated", updatedCategoryObject.CategoryName);
         }
 
         [Fact]

@@ -24,7 +24,12 @@ public class ProductService:IGenericService<Product>
         {
             throw new NullReferenceException("The object could not be found!");
         }
-
+        var orderDetailsList = _context.OrderDetails.Where(x => x.ProductID == id).ToList();
+        foreach (var orderDetails in orderDetailsList)
+        {
+            _context.OrderDetails.Remove(orderDetails);
+            _context.SaveChanges();
+        }
         _context.Products.Remove(productToDelete);
         _context.SaveChanges();
     }

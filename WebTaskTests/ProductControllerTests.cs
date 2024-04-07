@@ -74,8 +74,10 @@ namespace WebTaskTests
             var responseForUpdate = await client.PutAsync("/api/products/1", content);
             responseForUpdate.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK,responseForUpdate.StatusCode);
-            var updatedProduct = JsonSerializer.Deserialize<Product>(await responseForUpdate.Content.ReadAsStringAsync(), JsonSerializerOptions.Default);
-            Assert.Equal("updated product name", updatedProduct.ProductName);
+            var updatedGetResponse = await client.GetAsync($"/api/products/1");
+            var contentOfUpdated = await updatedGetResponse.Content.ReadAsStringAsync();
+            var productToCheck = JsonSerializer.Deserialize<Product>(contentOfUpdated);
+            Assert.Equal("updated product name", productToCheck.ProductName);
         }
 
         [Fact]

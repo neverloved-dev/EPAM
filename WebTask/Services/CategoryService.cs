@@ -26,6 +26,15 @@ public class CategoryService:IGenericService<Category>
         var productList = _context.Products.Where(x=>x.CategoryID == id).ToList();
         foreach (var product in productList)
         {
+            var orderDetailsList = _context.OrderDetails.Where(x=>x.ProductID == product.ProductID).ToList();
+            foreach(var orderDetail in orderDetailsList)
+            {
+                _context.OrderDetails.Remove(orderDetail);
+                _context.SaveChanges();
+            }
+        }
+        foreach (var product in productList)
+        {
             _context.Products.Remove(product);
             _context.SaveChanges();
         }
