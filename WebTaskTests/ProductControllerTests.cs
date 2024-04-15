@@ -29,8 +29,8 @@ namespace WebTaskTests
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
         [Theory]
-        [InlineData(1)]
-        [InlineData(3)]
+        [InlineData(7)]
+        [InlineData(9)]
         public async Task GetSingleProductsReturnsSingleProduct(int productId)
         {
             var client = _applicationFactory.CreateClient();
@@ -65,16 +65,16 @@ namespace WebTaskTests
         public async Task UpdatesProductWith200ResponseAndReturnsIt()
         {
             var client = _applicationFactory.CreateClient();
-            var resposne = await client.GetAsync($"/api/products/1");
+            var resposne = await client.GetAsync($"/api/products/7");
             var productToUpdateinJSON = await resposne.Content.ReadAsStringAsync();
             var productToUpdate = JsonSerializer.Deserialize<Product>(productToUpdateinJSON,JsonSerializerOptions.Default);
             productToUpdate.ProductName = "updated product name";
             var jsonToSend = JsonSerializer.Serialize(productToUpdate);
             var content = new StringContent(jsonToSend, Encoding.UTF8, "application/json");
-            var responseForUpdate = await client.PutAsync("/api/products/1", content);
+            var responseForUpdate = await client.PutAsync("/api/products/7", content);
             responseForUpdate.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK,responseForUpdate.StatusCode);
-            var updatedGetResponse = await client.GetAsync($"/api/products/1");
+            var updatedGetResponse = await client.GetAsync($"/api/products/7");
             var contentOfUpdated = await updatedGetResponse.Content.ReadAsStringAsync();
             var productToCheck = JsonSerializer.Deserialize<Product>(contentOfUpdated);
             Assert.Equal("updated product name", productToCheck.ProductName);
@@ -99,8 +99,8 @@ namespace WebTaskTests
         }
 
         [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
+        [InlineData(1104)]
+        [InlineData(1107)]
         public async Task DeleteProductWith200Response(int productId)
         {
             var client = _applicationFactory.CreateClient();

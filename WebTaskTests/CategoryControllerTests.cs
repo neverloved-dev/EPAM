@@ -29,18 +29,18 @@ namespace WebTaskTests
         public async void PutCategoryReturns200()
         {
             var client = _applicationFactory.CreateClient();
-            var categoryToUpdateRequest = client.GetAsync("api/categories/1");
+            var categoryToUpdateRequest = client.GetAsync("api/categories/7");
             var categoryToUpdate = await categoryToUpdateRequest.Result.Content.ReadAsStringAsync();
             var category = System.Text.Json.JsonSerializer.Deserialize<Category>(categoryToUpdate);
             category.CategoryName = "Updated";
             var json = JsonConvert.SerializeObject(category);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync("/api/categories/1",content);
+            var response = await client.PutAsync("/api/categories/7",content);
             response.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-           var updatedCategoryRequest = client.GetAsync("api/categories/1");
-           var updatedCategoryString = await categoryToUpdateRequest.Result.Content.ReadAsStringAsync();
-           var updatedCategoryObject = System.Text.Json.JsonSerializer.Deserialize<Category>(updatedCategoryString);
+            var updatedCategoryRequest = client.GetAsync("api/categories/7");
+            var updatedCategoryString = await updatedCategoryRequest.Result.Content.ReadAsStringAsync();
+            var updatedCategoryObject = System.Text.Json.JsonSerializer.Deserialize<Category>(updatedCategoryString);
             Assert.Equal("Updated", updatedCategoryObject.CategoryName);
         }
 
@@ -65,8 +65,8 @@ namespace WebTaskTests
         }
 
         [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
+        [InlineData(3)]
+        [InlineData(4)]
         public async Task ReturnsSingleCategoryWith200Response(int categoryId)
         {
             var client = _applicationFactory.CreateClient();
@@ -78,8 +78,8 @@ namespace WebTaskTests
         }
 
         [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
+        [InlineData(7)]
+        [InlineData(8)]
         public async void Deletes_SingleCategory_With200Response(int categoryId)
         {
             var client = _applicationFactory.CreateClient();
